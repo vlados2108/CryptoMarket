@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
-import styles from './css/button.module.css'
+import styles from './button.module.scss'
 type InputProps = {
     handler?: () => void
     className?: string
