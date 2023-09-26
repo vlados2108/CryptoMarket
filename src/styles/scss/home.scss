@@ -1,0 +1,115 @@
+.home-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    .home-table {
+        width: 50%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        .home-table-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            border: 2px solid #9c9c9b;
+            padding: 10px 5px;
+            border-radius: 12px;
+            align-items: center;
+            &.header {
+                background-color: #9c9c9b;
+            }
+
+            .home-table-column {
+                font-size: 25px;
+                text-align: center;
+                &.header {
+                    font-weight: 600;
+                    font-size: 30px;
+                }
+                &.image {
+                    width: 10%;
+                    height: 100%;
+                }
+                &.percent-red {
+                    color: red;
+                }
+
+                &.percent-green {
+                    color: green;
+                }
+            }
+
+            .home-table-add-btn {
+                width: 5vw;
+                height: 5vh;
+                background: #b8b9bd;
+            }
+        }
+
+        .pagination {
+            margin: 10px auto;
+            display: flex;
+            gap: 3px;
+            .pagination-btn {
+                width: 5vw;
+                height: 4vh;
+                &.active {
+                    background: #2b5ff0;
+                }
+            }
+        }
+    }
+}
+
+.search-input {
+    width: 50%;
+    margin: 20px auto;
+    height: 5vh;
+}
+
+@media (max-width: 1800px) {
+    .home-container {
+        .home-table {
+            .home-table-row {
+                .home-table-column {
+                    font-size: calc(
+                        15px + (25 - 15) * ((100vw - 390px) / (1920 - 390))
+                    );
+                    &.header {
+                        font-size: calc(
+                            18px + (30 - 18) * ((100vw - 390px) / (1920 - 390))
+                        );
+                    }
+                }
+            }
+            .pagination {
+                .pagination-btn {
+                    font-size: calc(
+                        15px + (25 - 15) * ((100vw - 390px) / (1920 - 390))
+                    );
+                    &.active {
+                        background: #2b5ff0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .home-container {
+        .home-table {
+            width: 100%;
+            .home-table-row {
+                .home-table-column {
+                    &.image {
+                        width: 10%;
+                    }
+                }
+                .home-table-add-btn {
+                    width: 10vw;
+                }
+            }
+        }
+    }
+}
