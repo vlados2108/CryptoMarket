@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Coin, CoinResponse } from './types'
-import '../styles/css/home.css'
+import '../styles/home.scss'
 import { formatPrice, getLogoUrl } from './utility/utility'
 import Input from './shared/input/input'
 import Button from './shared/button/button'
@@ -106,8 +106,10 @@ export default function Home() {
                                     {formatPrice(coin.changePercent24Hr)}%
                                 </div>
 
-                                <Button value="Add" className="home-table-add-btn"/>
-                                    
+                                <Button
+                                    value="Add"
+                                    className="home-table-add-btn"
+                                />
                             </div>
                         )
                     })}
