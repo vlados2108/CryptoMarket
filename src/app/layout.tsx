@@ -1,5 +1,5 @@
 import Header from './header'
-import "../styles/layout.scss"
+import "./layout.scss"
 export default function RootLayout({
     children,
 }: {
