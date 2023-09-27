@@ -1,25 +1,32 @@
 import React, { Dispatch, ReactNode, SetStateAction } from 'react'
-import "./modal.module.scss"
+import styles from './modal.module.scss'
 interface ActiveProps {
     active: boolean
     setActive: Dispatch<SetStateAction<boolean>>
-    children: ReactNode
+    children?: ReactNode
+    width?: number
 }
-export default function Modal(props: ActiveProps) {
+export default function Modal({
+    active,
+    setActive,
+    children,
+    width = 50,
+}: ActiveProps) {
     return (
         <div
-            className={props.active ? 'modal active' : 'modal'}
+            className={`${styles.modal} ${active && styles.active}`}
             onClick={() => {
-                props.setActive(false)
+                setActive(false)
             }}
         >
             <div
-                className={
-                    props.active ? 'modal-content active' : 'modal-content'
-                }
+                className={`${styles['modal-content']} ${
+                    active && styles.active
+                }`}
+                style={{ width: `${width}vw` }}
                 onClick={(e) => e.stopPropagation()}
             >
-                {props.children}
+                {children}
             </div>
         </div>
     )
