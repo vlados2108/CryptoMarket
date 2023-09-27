@@ -1,22 +1,25 @@
-import React, { useState } from 'react'
+import React, { SetStateAction, Dispatch } from 'react'
 import classNames from 'classnames'
 import styles from './input.module.scss'
-type InputProps = {
-    handler?: (value: string) => void
+
+type InputProps<T> = {
+    handler?: (value: T) => void
     className?: string
     placeholder?: string
     customAttrs?: Record<string, string>
     type?: string
+    value?: T
+    setValue?: Dispatch<SetStateAction<T>>
 }
-export default function Input({
+export default function Input<T>({
     handler,
     className,
     placeholder,
     customAttrs,
     type,
-}: InputProps) {
-    const [value, setValue] = useState('')
-
+    value,
+    setValue,
+}: InputProps<T>) {
     return (
         <input
             placeholder={placeholder}
@@ -25,11 +28,18 @@ export default function Input({
                 [className as string]: !!className,
             })}
             {...customAttrs}
-            value={value}
+            value={
+                type === 'number'
+                    ? (value as number | undefined)
+                    : (value as string)
+            }
             type={type}
             onChange={(e) => {
-                setValue(e.target.value)
-                handler ? handler(e.target.value) : ''
+                const inputValue = e.target.value
+                const parsedValue =
+                    type === 'number' ? Number(inputValue) : inputValue
+                setValue ? setValue(inputValue as T) : ''
+                handler ? handler(inputValue as T) : ''
             }}
         ></input>
     )
