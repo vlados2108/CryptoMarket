@@ -1,17 +1,27 @@
 'use client'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Coin, CoinResponse } from './types'
+import { Coin, CoinResponse, Filters } from './types'
 import './home.scss'
-import { formatPrice, getLogoUrl } from './utility'
+import {
+    formatPrice,
+    getLogoUrl,
+    filterCoins,
+    sortByAscending,
+    sortByDescending,
+} from './utility'
 import Input from './shared/input'
 import Button from './shared/button'
+import Modal from './shared/modal/modal'
+import FilterContent from './filterContent'
+import Arrows from './arrows'
+import Link from 'next/link'
 
 export default function Home() {
     const [coins, setCoins] = useState<Coin[]>([])
     const [oldCoins, setOldCoins] = useState<Coin[]>([])
     const [currentPage, setCurrentPage] = useState(1)
-    const [filterModalActive,setFilterModalActive] = useState(false)
+    const [filterModalActive, setFilterModalActive] = useState(false)
 
     const coinsPerPage = 20
     const totalCoins = coins.length
@@ -43,7 +53,6 @@ export default function Home() {
                     }
                 })
             }
-            console.log(newArray)
             setCoins(newArray)
             setOldCoins(newArray)
         })
@@ -62,30 +71,103 @@ export default function Home() {
         }
     }
 
+    const applyFilters = (filters: Filters) => {
+        const filteredCoins = filterCoins(coins, filters)
+        filteredCoins.length !== 0
+            ? setCoins(filteredCoins)
+            : setCoins(oldCoins)
+    }
+
+    const discardFilters = () => {
+        setCoins(oldCoins)
+    }
+
+    const ascPrice = () => {
+        const sortedCoins = sortByAscending(coins, 'priceUsd')
+        setCoins(sortedCoins)
+    }
+    const dscPrice = () => {
+        const sortedCoins = sortByDescending(coins, 'priceUsd')
+        setCoins(sortedCoins)
+    }
+
+    const ascCap = () => {
+        const sortedCoins = sortByAscending(coins, 'marketCapUsd')
+        setCoins(sortedCoins)
+    }
+    const dscCap = () => {
+        const sortedCoins = sortByDescending(coins, 'marketCapUsd')
+        setCoins(sortedCoins)
+    }
+    const ascPerc = () => {
+        const sortedCoins = sortByAscending(coins, 'changePercent24Hr')
+        setCoins(sortedCoins)
+    }
+    const dscPerc = () => {
+        const sortedCoins = sortByDescending(coins, 'changePercent24Hr')
+        setCoins(sortedCoins)
+    }
+
     return (
         <>
             <div className="home-container">
-                <Input
+                <Input<string>
                     placeholder="Search coin"
                     className="search-input"
                     handler={onSearch}
                     type="search"
                 ></Input>
-                <Button className='home-filter-btn' handler={()=>{}} value='Filters'/>
+                <Button
+                    className="home-filter-btn"
+                    handler={() => {
+                        setFilterModalActive(true)
+                    }}
+                    value="Filters"
+                />
+                <Modal
+                    active={filterModalActive}
+                    setActive={setFilterModalActive}
+                >
+                    <FilterContent
+                        applyFilters={applyFilters}
+                        discardFilters={discardFilters}
+                    />
+                </Modal>
                 <div className="home-table">
                     <div className="home-table-row header">
                         <div className="home-table-column header">Symbol</div>
                         <div className="home-table-column header">Logo</div>
-                        <div className="home-table-column header">Price</div>
-                        <div className="home-table-column header">
-                            Market cap
+                        <div
+                            className="home-table-column header"
+                            onClick={() => {}}
+                        >
+                            Price
+                            <Arrows sortAsc={ascPrice} sortDsc={dscPrice} />
                         </div>
-                        <div className="home-table-column header">24h %</div>
+
+                        <div
+                            className="home-table-column header"
+                            onClick={() => {}}
+                        >
+                            Market cap
+                            <Arrows sortAsc={ascCap} sortDsc={dscCap} />
+                        </div>
+                        <div
+                            className="home-table-column header"
+                            onClick={() => {}}
+                        >
+                            24h %
+                            <Arrows sortAsc={ascPerc} sortDsc={dscPerc} />
+                        </div>
                         <div className="home-table-column header">Buy</div>
                     </div>
                     {currentCoins.map((coin) => {
                         return (
-                            <div className="home-table-row" key={coin.id}>
+                            <Link
+                                href={`coinInfo/${coin.id}`}
+                                className="home-table-row"
+                                key={coin.id}
+                            >
                                 <div className="home-table-column">
                                     {coin.symbol}
                                 </div>
@@ -113,7 +195,7 @@ export default function Home() {
                                     value="Add"
                                     className="home-table-add-btn"
                                 />
-                            </div>
+                            </Link>
                         )
                     })}
                     {/* Пагинация */}
