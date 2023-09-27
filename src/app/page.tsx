@@ -2,15 +2,16 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Coin, CoinResponse } from './types'
-import '../styles/home.scss'
-import { formatPrice, getLogoUrl } from './utility/utility'
-import Input from './shared/input/input'
-import Button from './shared/button/button'
+import './home.scss'
+import { formatPrice, getLogoUrl } from './utility'
+import Input from './shared/input'
+import Button from './shared/button'
 
 export default function Home() {
     const [coins, setCoins] = useState<Coin[]>([])
     const [oldCoins, setOldCoins] = useState<Coin[]>([])
     const [currentPage, setCurrentPage] = useState(1)
+    const [filterModalActive,setFilterModalActive] = useState(false)
 
     const coinsPerPage = 20
     const totalCoins = coins.length
@@ -70,6 +71,7 @@ export default function Home() {
                     handler={onSearch}
                     type="search"
                 ></Input>
+                <Button className='home-filter-btn' handler={()=>{}} value='Filters'/>
                 <div className="home-table">
                     <div className="home-table-row header">
                         <div className="home-table-column header">Symbol</div>
@@ -79,6 +81,7 @@ export default function Home() {
                             Market cap
                         </div>
                         <div className="home-table-column header">24h %</div>
+                        <div className="home-table-column header">Buy</div>
                     </div>
                     {currentCoins.map((coin) => {
                         return (
