@@ -1,4 +1,4 @@
-import Header from './header'
+import Header from './shared/header'
 import "./layout.scss"
 export default function RootLayout({
     children,
