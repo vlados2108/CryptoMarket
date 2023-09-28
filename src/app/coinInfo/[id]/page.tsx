@@ -11,16 +11,24 @@ import './coinInfo.scss'
 import { formatPrice, getLogoUrl, formatNumber } from '@/app/utility'
 import Button from '@/app/shared/button'
 import Chart from './chart'
+import Link from 'next/link'
 
 interface ICoinInfoProps {
     params: { id: string }
 }
 const periods = ['1D', '7D', '1M']
+
 export default function CoinInfo({ params }: ICoinInfoProps) {
     const [info, setInfo] = useState<coinInfo>()
     const [error, setError] = useState<any>(null)
     const [graphData, setGraphData] = useState<coinPrice[]>([])
     const [currPeriod, setCurrPeriod] = useState(0)
+
+    const now = Date.now() // Current timestamp in milliseconds
+    const oneDayAgo = now - 24 * 60 * 60 * 1000 // 1 day ago
+    const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000 // 7 days ago
+    const oneMonthAgo = now - 30 * 24 * 60 * 60 * 1000 // 1 month ago
+
     useEffect(() => {
         if (params.id) {
             const id = params.id
@@ -45,26 +53,40 @@ export default function CoinInfo({ params }: ICoinInfoProps) {
                 .catch((error) => {
                     setError(error)
                 })
-            const res = getPriceChangingData(id, 'd1')
         }
     }, [params])
-    if (error) {
-        return <div>Error fetching data: {error.message}</div>
-    }
+
+    useEffect(() => {
+        const id = params.id
+        if (id)
+            switch (currPeriod) {
+                case 0: {
+                    getPriceChangingData(id, 'm5', oneDayAgo, now)
+                    break
+                }
+                case 1: {
+                    getPriceChangingData(id, 'h1', sevenDaysAgo, now)
+                    break
+                }
+                case 2: {
+                    getPriceChangingData(id, 'h12', oneMonthAgo, now)
+                    break
+                }
+            }
+    }, [currPeriod])
 
     const getPriceChangingData = (
         coinId: string,
         interval: string,
-        start?: string,
-        end?: string
+        start?: number,
+        end?: number
     ) => {
         axios
             .get(
-                `https://api.coincap.io/v2/assets/${coinId}/history?interval=${interval}`
+                `https://api.coincap.io/v2/assets/${coinId}/history?interval=${interval}&start=${start}&end=${end}`
             )
             .then((response) => {
                 const res = response.data.data as coinPriceResponse[]
-                console.log(res)
                 const graphData = res.map((el) => {
                     const date = new Date(el.time).toLocaleDateString('en-ru')
                     return {
@@ -72,7 +94,6 @@ export default function CoinInfo({ params }: ICoinInfoProps) {
                         Price: parseFloat(el.priceUsd),
                     }
                 })
-                console.log(graphData)
                 setGraphData(graphData)
             })
             .catch((error) => {
@@ -80,6 +101,9 @@ export default function CoinInfo({ params }: ICoinInfoProps) {
             })
     }
 
+    if (error) {
+        return <div>Error fetching data: {error.message}</div>
+    }
     if (!info) return <div>Loading...</div>
     return (
         <div className="coinpage-container">
@@ -88,7 +112,11 @@ export default function CoinInfo({ params }: ICoinInfoProps) {
                     <img src={info.image} className="coininfo-logo" />
                     <div className="coininfo-text name">{info.name}</div>
                     <div className="coininfo-text symbol">{info.symbol}</div>
+                    <Link href={'/'}>
+                        <img src="/back.png" className="coinInfo-back-arrow" />
+                    </Link>
                 </div>
+
                 <div className="coininfo-text price">
                     {formatNumber(info.priceUsd)} $
                 </div>
@@ -117,6 +145,9 @@ export default function CoinInfo({ params }: ICoinInfoProps) {
                     </div>
                 </div>
             </div>
+
+            <Button value="Add" className="coinInfo-btn" handler={() => {}} />
+
             <div className="coininfo-chart-container">
                 <div className="coininfo-period-container">
                     {periods.map((el, index) => {
@@ -129,7 +160,9 @@ export default function CoinInfo({ params }: ICoinInfoProps) {
                                         : 'coininfo-period-btn'
                                 }
                                 value={el}
-                                handler={()=>{setCurrPeriod(index)}}
+                                handler={() => {
+                                    setCurrPeriod(index)
+                                }}
                             />
                         )
                     })}
