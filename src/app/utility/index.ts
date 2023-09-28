@@ -12,6 +12,15 @@ export const formatPrice = (price: number): string => {
     }
 }
 
+export function formatNumber(number: number) {
+    const [integerPart, fractionalPart] = Number(number).toFixed(2).split('.')
+    const formattedIntegerPart = integerPart.replace(
+        /\B(?=(\d{3})+(?!\d))/g,
+        ','
+    )
+    return `${formattedIntegerPart}.${fractionalPart}`
+}
+
 export const getLogoUrl = (coinSymbol: string): string => {
     return `https://assets.coincap.io/assets/icons/${coinSymbol.toLowerCase()}@2x.png`
 }
