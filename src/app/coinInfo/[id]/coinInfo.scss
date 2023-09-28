@@ -8,7 +8,7 @@
     .coininfo-container {
         width: 50%;
         margin: 0 auto;
-
+    
         .coininfo-name-container {
             margin-top: 5%;
             display: flex;
@@ -38,7 +38,6 @@
     .coinInfo-btn {
         margin: 3% auto;
         width: 10%;
-        height: 200;
     }
     .coininfo-chart-container {
         margin: 0 auto;
@@ -46,7 +45,7 @@
         flex-direction: column;
         align-items: flex-end;
         width: 70%;
-        height: 70%;
+        height: 35%;
         .coininfo-period-container {
             margin-right: 20px;
             padding: 0 10px;
@@ -112,6 +111,10 @@
             .coininfo-name-container {
                 gap: 20px;
                 .coininfo-logo {
+                }
+                .coinInfo-back-arrow {
+                    width: 30px;
+                    height: 30px;
                 }
             }
             .coininfo-text-key-value-container {
