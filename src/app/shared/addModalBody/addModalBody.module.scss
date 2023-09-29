@@ -1,0 +1,15 @@
+.addBody-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+    height: 100px;  
+    .addBody-input{
+        text-align: center;
+        height: 50%;
+        margin-bottom: 5px;
+    }   
+    .addBody-btn{
+        height: 50%;
+    }
+}
