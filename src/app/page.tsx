@@ -161,21 +161,24 @@ export default function Home() {
                     </div>
                     {currentCoins.map((coin) => {
                         return (
-                            <>
+                            <div key={coin.id}>
                                 <div
                                     onClick={() =>
                                         router.push(`coinInfo/${coin.id}`)
                                     }
-                                    key={coin.id}
                                     className="home-table-row"
                                 >
                                     <div className="home-table-column">
                                         {coin.symbol}
                                     </div>
-                                    <img
-                                        src={coin.logoUrl}
-                                        className="home-table-column image"
-                                    ></img>
+                                    <div className="home-table-column">
+                                        <img
+                                            src={coin.logoUrl}
+                                            className="home-table-image"
+                                            loading="lazy"
+                                        ></img>
+                                    </div>
+
                                     <div className="home-table-column">
                                         {formatPrice(coin.priceUsd)} $
                                     </div>
@@ -203,14 +206,14 @@ export default function Home() {
                                         }}
                                     />
                                 </div>
-                            </>
+                            </div>
                         )
                     })}
                     {/* Пагинация */}
                     <div className="pagination">
                         {Array.from({ length: totalPages }).map((_, index) => (
                             <Button
-                                key={index}
+                                //key={index}
                                 handler={() => handlePageChange(index + 1)}
                                 className={
                                     currentPage === index + 1
@@ -238,6 +241,7 @@ export default function Home() {
                     coinId={coinAddId}
                     coinName={coinAddName}
                     coinPrice={coinAddPrice}
+                    onCloseAdd={()=>{setAddModalActive(false)}}
                 />
             </Modal>
         </>
