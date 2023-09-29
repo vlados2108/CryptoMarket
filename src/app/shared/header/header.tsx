@@ -1,12 +1,16 @@
 'use client'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { formatNumber } from '../../utility'
+import { appPrefix, formatNumber } from '../../utility'
 import styles from './header.module.scss'
+import Modal from '../modal'
 export default function Header() {
     const [price1, setPrice1] = useState(0)
     const [price2, setPrice2] = useState(0)
     const [price3, setPrice3] = useState(0)
+    const [backpackSum, setBackpackSum] = useState(0)
+    const [diff, setDiff] = useState(0)
+    const [backpackModalActive,setBackpackModalActive] = useState(false)
     useEffect(() => {
         axios.get(`https://api.coincap.io/v2/assets/bitcoin`).then((res) => {
             setPrice1(res.data.data.priceUsd)
@@ -19,13 +23,40 @@ export default function Header() {
         })
     }, [])
 
+    useEffect(() => {
+        let mySum = 0
+        const fetchCurrentPrices = []
+        for (let key in localStorage) {
+            if (!localStorage.hasOwnProperty(key)) {
+                continue
+            }
+            if (key.startsWith(appPrefix)) {
+                const data = JSON.parse(localStorage[key])
+                mySum += data.totalPrice
+
+                const requestPromise = axios
+                    .get(`https://api.coincap.io/v2/assets/${data.id}`)
+                    .then((res) => res.data.data.priceUsd * data.count)
+
+                fetchCurrentPrices.push(requestPromise)
+            }
+        }
+        Promise.all(fetchCurrentPrices).then((prices) => {
+            const currSum = prices.reduce((acc, curr) => acc + curr, 0)
+            const diff = currSum - mySum
+
+            setBackpackSum(mySum)
+            setDiff(diff)
+        })
+    }, [])
+
     return (
         <div className={styles['header-container']}>
             <div className={styles['header-trending-container']}>
                 <div className={styles['header-trending']}>Trending:</div>
                 <div className={styles['header-tending-row']}>
                     <div className={styles['header-trending-text']}>
-                        Bitcoin:
+                        BTC:
                     </div>
                     <div className={styles['header-trending-text']}>
                         {formatNumber(price1)} $
@@ -33,7 +64,7 @@ export default function Header() {
                 </div>
                 <div className={styles['header-tending-row']}>
                     <div className={styles['header-trending-text']}>
-                        Ethereum:
+                        ETH:
                     </div>
                     <div className={styles['header-trending-text']}>
                         {formatNumber(price2)} $
@@ -41,13 +72,26 @@ export default function Header() {
                 </div>
                 <div className={styles['header-tending-row']}>
                     <div className={styles['header-trending-text']}>
-                        Solana:
+                        SOL:
                     </div>
                     <div className={styles['header-trending-text']}>
                         {formatNumber(price3)} $
                     </div>
                 </div>
             </div>
+
+            <div className={styles['header-backpack-container']} onClick={()=>{setBackpackModalActive(true)}}>
+                <div className={styles['header-backpack']}>Backpack:</div>
+                <div className={`${styles['header-backpack-text']} ${styles['price']}`}>
+                    {formatNumber(backpackSum)} USD
+                </div>
+                <div className={`${styles['header-backpack-text']} ${styles['diff']}`}>
+                    {diff > 0? '+' : ''}{formatNumber(diff)}  ({formatNumber(diff / 100)} %)
+                </div>
+            </div>
+            <Modal active={backpackModalActive} setActive={setBackpackModalActive}>
+                
+            </Modal>
         </div>
     )
 }
