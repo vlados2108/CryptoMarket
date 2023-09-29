@@ -2,7 +2,6 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-
     .home-filter-btn {
         width: 10%;
         margin: 10px 65%;
@@ -13,15 +12,19 @@
         margin: 0 auto;
         display: flex;
         flex-direction: column;
+        cursor: pointer;
         .home-table-row {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            gap: 4px;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
             border: 2px solid #9c9c9b;
             padding: 10px 5px;
             border-radius: 12px;
             align-items: center;
+
+            &:hover{
+                background-color: #C9C1C1;
+                transition: all 0.5s;
+            }
             &.header {
                 background-color: #9c9c9b;
             }
@@ -31,23 +34,22 @@
                 text-align: center;
                 display: flex;
                 align-items: center;
+                justify-content: center;
                 &.header {
+                    display: flex;
                     font-weight: 600;
-                    font-size: 30px;
 
                     .filter-image-container {
                         display: flex;
                         flex-direction: column;
-                        margin: auto;
                         gap: 5px;
                         .filter-image {
                             width: 20px;
-                            height: 20px;
                         }
                     }
                 }
-                &.image {
-                    width: 10%;
+                .home-table-image {
+                    width: 30%;
                     height: 100%;
                 }
                 &.percent-red {
@@ -133,8 +135,11 @@
             width: 100%;
             .home-table-row {
                 .home-table-column {
+                    height: 100%;
+                    width: 100%;
                     &.image {
-                        width: 10%;
+                        width: 50%;
+                        //width: 10%;
                     }
                 }
                 .home-table-add-btn {
