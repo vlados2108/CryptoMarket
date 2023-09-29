@@ -5,6 +5,7 @@ import { appPrefix, formatNumber } from '../utility'
 import styles from './header.module.scss'
 import Modal from '../modal'
 import BackpackModalBody from '../backpackModalBody/backpackModalBody'
+import { useGlobalContext } from '@/app/context'
 export default function Header() {
     const [price1, setPrice1] = useState(0)
     const [price2, setPrice2] = useState(0)
@@ -12,6 +13,7 @@ export default function Header() {
     const [backpackSum, setBackpackSum] = useState(0)
     const [diff, setDiff] = useState(0)
     const [backpackModalActive,setBackpackModalActive] = useState(false)
+    const {dateAdded} = useGlobalContext()
     useEffect(() => {
         axios.get(`https://api.coincap.io/v2/assets/bitcoin`).then((res) => {
             setPrice1(res.data.data.priceUsd)
@@ -44,12 +46,12 @@ export default function Header() {
         }
         Promise.all(fetchCurrentPrices).then((prices) => {
             const currSum = prices.reduce((acc, curr) => acc + curr, 0)
-            const diff = currSum - mySum
+            const diff = mySum-currSum
 
             setBackpackSum(mySum)
             setDiff(diff)
         })
-    }, [])
+    }, [dateAdded])
 
     return (
         <div className={styles['header-container']}>
