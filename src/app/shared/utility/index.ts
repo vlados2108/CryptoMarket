@@ -1,4 +1,4 @@
-import { Coin, Filters } from '../types'
+import { Coin, Filters } from '../../types'
 
 export const appPrefix = "cryptomarket_"
 export const formatPrice = (price: number): string => {
