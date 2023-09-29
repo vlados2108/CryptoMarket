@@ -1,5 +1,6 @@
 import Header from './shared/header'
-import "./layout.scss"
+import './layout.scss'
+import { GlobalContextProvider } from './context'
 export default function RootLayout({
     children,
 }: {
@@ -8,8 +9,10 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                <Header />
-                {children}
+                <GlobalContextProvider>
+                    <Header />
+                    {children}
+                </GlobalContextProvider>
             </body>
         </html>
     )
