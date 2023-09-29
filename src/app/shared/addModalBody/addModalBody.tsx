@@ -3,6 +3,7 @@ import Input from '../input'
 import Button from '../button'
 import styles from './addModalBody.module.scss'
 import { appPrefix } from '@/app/shared/utility'
+import { useGlobalContext } from '@/app/context'
 
 interface IAddModalBodyProps {
     coinId: string
@@ -18,7 +19,7 @@ export default function AddModalBody({
 }: IAddModalBodyProps) {
     const [n, setN] = useState('')
     const [error, setError] = useState<any>(null)
-
+    const { dateAdded, setDateAdded } = useGlobalContext()
     const MAX_COUNT = 10000
     const MIN_COUNT = 1
     const handleAdd = () => {
@@ -55,6 +56,7 @@ export default function AddModalBody({
         }
 
         localStorage.setItem(appPrefix + coinId, JSON.stringify(data))
+        setDateAdded(Math.random())
         onCloseAdd()
     }
 
