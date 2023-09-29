@@ -12,6 +12,7 @@ export default function Arrows({ sortAsc, sortDsc }: IArrowProps) {
                 onClick={() => {
                     sortAsc()
                 }}
+                loading='lazy'
             ></img>
             <img
                 src="/arrowdown.png"
@@ -19,6 +20,7 @@ export default function Arrows({ sortAsc, sortDsc }: IArrowProps) {
                 onClick={() => {
                     sortDsc()
                 }}
+                loading='lazy'
             ></img>
         </div>
     )
