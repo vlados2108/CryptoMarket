@@ -35,11 +35,11 @@ export default function Input<T>({
             }
             type={type}
             onChange={(e) => {
-                const inputValue = e.target.value
+                const inputValue = e.target.value as T
                 const parsedValue =
                     type === 'number' ? Number(inputValue) : inputValue
-                setValue ? setValue(inputValue as T) : ''
-                handler ? handler(inputValue as T) : ''
+                setValue ? setValue(inputValue) : ''
+                handler ? handler(inputValue) : ''
             }}
         ></input>
     )
