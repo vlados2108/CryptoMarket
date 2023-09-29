@@ -8,10 +8,12 @@ import {
     coinPriceResponse,
 } from './types'
 import './coinInfo.scss'
-import { formatPrice, getLogoUrl, formatNumber } from '@/app/utility'
+import { formatPrice, getLogoUrl, formatNumber, } from '@/app/utility'
 import Button from '@/app/shared/button'
 import Chart from './chart'
 import Link from 'next/link'
+import Modal from '@/app/shared/modal'
+import AddModalBody from '@/app/shared/addModalBody'
 
 interface ICoinInfoProps {
     params: { id: string }
@@ -23,11 +25,15 @@ export default function CoinInfo({ params }: ICoinInfoProps) {
     const [error, setError] = useState<any>(null)
     const [graphData, setGraphData] = useState<coinPrice[]>([])
     const [currPeriod, setCurrPeriod] = useState(0)
+    const [addModalActive, setAddModalActive] = useState(false)
+    const [coinAddId, setCoinAddId] = useState('')
+    const [coinAddPrice, setCoinAddPrice] = useState(0)
+    const [coinAddName, setCoinAddName] = useState('')
 
-    const now = Date.now() // Current timestamp in milliseconds
-    const oneDayAgo = now - 24 * 60 * 60 * 1000 // 1 day ago
-    const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000 // 7 days ago
-    const oneMonthAgo = now - 30 * 24 * 60 * 60 * 1000 // 1 month ago
+    const now = Date.now() 
+    const oneDayAgo = now - 24 * 60 * 60 * 1000 
+    const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000 
+    const oneMonthAgo = now - 30 * 24 * 60 * 60 * 1000 
 
     useEffect(() => {
         if (params.id) {
@@ -146,7 +152,13 @@ export default function CoinInfo({ params }: ICoinInfoProps) {
                 </div>
             </div>
 
-            <Button value="Add" className="coinInfo-btn" handler={() => {}} />
+            <Button value="Add" className="coinInfo-btn" handler={() => {
+                setAddModalActive(true)
+                setCoinAddId(info.id)
+                setCoinAddName(info.name)
+                setCoinAddPrice(info.priceUsd)
+            }} 
+                />
 
             <div className="coininfo-chart-container">
                 <div className="coininfo-period-container">
@@ -171,6 +183,18 @@ export default function CoinInfo({ params }: ICoinInfoProps) {
                     <Chart graphData={graphData} width={1000} height={600} />
                 </div>
             </div>
+            <Modal
+                active={addModalActive}
+                setActive={setAddModalActive}
+                width={window.innerWidth > 480 ? 10 : 30}
+            >
+                <AddModalBody
+                    coinId={coinAddId}
+                    coinName={coinAddName}
+                    coinPrice={coinAddPrice}
+                    onCloseAdd={()=>{setAddModalActive(false)}}
+                />
+            </Modal>
         </div>
     )
 }
