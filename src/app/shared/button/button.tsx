@@ -2,18 +2,18 @@ import React, { useState } from 'react'
 import classNames from 'classnames'
 import styles from './button.module.scss'
 type InputProps = {
-    handler?: () => void
+    handler?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
     className?: string
     customAttrs?: Record<string, string>
-    value?: string,
-    key?:number
+    value?: string
+    key?: number
 }
 export default function button({
     handler,
     className,
     customAttrs,
     value,
-    key
+    key,
 }: InputProps) {
     return (
         <button
@@ -23,8 +23,8 @@ export default function button({
                 [className as string]: !!className,
             })}
             {...customAttrs}
-            onClick={() => {
-                handler ? handler() : ''
+            onClick={(e) => {
+                handler ? handler(e) : ''
             }}
         >
             {value}
