@@ -5,6 +5,11 @@
     .home-filter-btn {
         width: 10%;
         margin: 10px 65%;
+        background: #b8b9bd;
+        // &:hover {
+        //     background-color: #dfdede;
+        //     transition: all 0.5s;
+        // }
     }
 
     .home-table {
@@ -21,8 +26,8 @@
             border-radius: 12px;
             align-items: center;
 
-            &:hover{
-                background-color: #C9C1C1;
+            &:hover {
+                background-color: #c9c1c1;
                 transition: all 0.5s;
             }
             &.header {
@@ -59,12 +64,10 @@
                 &.percent-green {
                     color: green;
                 }
-            }
-
-            .home-table-add-btn {
-                width: 5vw;
-                height: 5vh;
-                background: #b8b9bd;
+                .home-table-add-btn {
+                    height: 5vh;
+                    background: #b8b9bd;
+                }
             }
         }
 
@@ -137,13 +140,9 @@
                 .home-table-column {
                     height: 100%;
                     width: 100%;
-                    &.image {
+                    .home-table-image {
                         width: 50%;
-                        //width: 10%;
                     }
-                }
-                .home-table-add-btn {
-                    width: 10vw;
                 }
             }
         }

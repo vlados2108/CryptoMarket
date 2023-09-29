@@ -3,12 +3,11 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    //flex-wrap: wrap;
     align-items: center;
     .coininfo-container {
         width: 50%;
         margin: 0 auto;
-    
+
         .coininfo-name-container {
             margin-top: 5%;
             display: flex;
@@ -37,7 +36,9 @@
 
     .coinInfo-btn {
         margin: 3% auto;
-        width: 10%;
+        width: 30%;
+        height: 4%;
+        background-color: #9c9c9b;
     }
     .coininfo-chart-container {
         margin: 0 auto;
@@ -61,13 +62,16 @@
                 &.active {
                     background-color: white;
                 }
+                &:hover {
+                    background-color: #dfdede;
+                    transition: all 0.5s;
+                }
             }
         }
         .coininfo-chart {
             height: 100%;
             width: 100%;
             max-width: 100%;
-            //overflow-x: auto;
             margin: 0 auto;
         }
     }
@@ -75,24 +79,15 @@
 
 .coininfo-text {
     font-size: 30px;
-
     &.name {
         font-weight: 600;
     }
-
-    &.symbol {
-    }
-
     &.value {
         font-weight: 600;
     }
-
     &.price {
         font-size: 50px;
         font-weight: 600;
-    }
-
-    &.key {
     }
 }
 
@@ -148,9 +143,6 @@
             font-weight: 600;
         }
 
-        &.symbol {
-        }
-
         &.value {
             font-weight: 600;
         }
@@ -160,9 +152,6 @@
                 30px + (50 - 30) * ((100vw - 390px) / (1920 - 390))
             );
             font-weight: 600;
-        }
-
-        &.key {
         }
     }
 }

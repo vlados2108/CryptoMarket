@@ -2,6 +2,10 @@
     border-radius: 6px;
     border-width: 0.1px;
     font-size: 25px;
+    &:hover{
+        background-color: #DFDEDE;
+        transition: all 0.5s;
+    }
 }
 @media (max-width: 1800px) {
     .button {

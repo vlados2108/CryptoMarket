@@ -39,6 +39,10 @@
             height: 50px;
             font-size: 25px;
             background: #b8b9bd;
+            &:hover{
+                background-color: #DFDEDE;
+                transition: all 0.5s;
+            }
         }
     }
 }
