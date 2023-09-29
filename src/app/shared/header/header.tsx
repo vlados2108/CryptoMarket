@@ -1,9 +1,10 @@
 'use client'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { appPrefix, formatNumber } from '../../utility'
+import { appPrefix, formatNumber } from '../utility'
 import styles from './header.module.scss'
 import Modal from '../modal'
+import BackpackModalBody from '../backpackModalBody/backpackModalBody'
 export default function Header() {
     const [price1, setPrice1] = useState(0)
     const [price2, setPrice2] = useState(0)
@@ -89,8 +90,8 @@ export default function Header() {
                     {diff > 0? '+' : ''}{formatNumber(diff)}  ({formatNumber(diff / 100)} %)
                 </div>
             </div>
-            <Modal active={backpackModalActive} setActive={setBackpackModalActive}>
-                
+            <Modal active={backpackModalActive} setActive={setBackpackModalActive} width={window.innerWidth <= 480 ? 90 : 40}>
+                <BackpackModalBody/>
             </Modal>
         </div>
     )
