@@ -16,12 +16,18 @@ import Modal from './shared/modal/modal'
 import FilterContent from './filterContent'
 import Arrows from './arrows'
 import Link from 'next/link'
+import AddModalBody from './shared/addModalBody'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
     const [coins, setCoins] = useState<Coin[]>([])
     const [oldCoins, setOldCoins] = useState<Coin[]>([])
     const [currentPage, setCurrentPage] = useState(1)
     const [filterModalActive, setFilterModalActive] = useState(false)
+    const [addModalActive, setAddModalActive] = useState(false)
+    const [coinAddId, setCoinAddId] = useState('')
+    const [coinAddPrice, setCoinAddPrice] = useState(0)
+    const [coinAddName, setCoinAddName] = useState('')
 
     const coinsPerPage = 20
     const totalCoins = coins.length
@@ -36,6 +42,7 @@ export default function Home() {
         setCurrentPage(pageNumber)
     }
 
+    const router = useRouter()
     useEffect(() => {
         axios.get(`https://api.coincap.io/v2/assets`).then(async (res) => {
             const originalArray = res.data.data as CoinResponse[]
@@ -124,15 +131,6 @@ export default function Home() {
                     }}
                     value="Filters"
                 />
-                <Modal
-                    active={filterModalActive}
-                    setActive={setFilterModalActive}
-                >
-                    <FilterContent
-                        applyFilters={applyFilters}
-                        discardFilters={discardFilters}
-                    />
-                </Modal>
                 <div className="home-table">
                     <div className="home-table-row header">
                         <div className="home-table-column header">Symbol</div>
@@ -163,39 +161,49 @@ export default function Home() {
                     </div>
                     {currentCoins.map((coin) => {
                         return (
-                            <Link
-                                href={`coinInfo/${coin.id}`}
-                                className="home-table-row"
-                                key={coin.id}
-                            >
-                                <div className="home-table-column">
-                                    {coin.symbol}
-                                </div>
-                                <img
-                                    src={coin.logoUrl}
-                                    className="home-table-column image"
-                                ></img>
-                                <div className="home-table-column">
-                                    {formatPrice(coin.priceUsd)} $
-                                </div>
-                                <div className="home-table-column">
-                                    {formatPrice(coin.marketCapUsd)} $
-                                </div>
+                            <>
                                 <div
-                                    className={
-                                        coin.changePercent24Hr > 0
-                                            ? 'home-table-column percent-red'
-                                            : 'home-table-column percent-green'
+                                    onClick={() =>
+                                        router.push(`coinInfo/${coin.id}`)
                                     }
+                                    key={coin.id}
+                                    className="home-table-row"
                                 >
-                                    {formatPrice(coin.changePercent24Hr)}%
+                                    <div className="home-table-column">
+                                        {coin.symbol}
+                                    </div>
+                                    <img
+                                        src={coin.logoUrl}
+                                        className="home-table-column image"
+                                    ></img>
+                                    <div className="home-table-column">
+                                        {formatPrice(coin.priceUsd)} $
+                                    </div>
+                                    <div className="home-table-column">
+                                        {formatPrice(coin.marketCapUsd)} $
+                                    </div>
+                                    <div
+                                        className={
+                                            coin.changePercent24Hr > 0
+                                                ? 'home-table-column percent-red'
+                                                : 'home-table-column percent-green'
+                                        }
+                                    >
+                                        {formatPrice(coin.changePercent24Hr)}%
+                                    </div>
+                                    <Button
+                                        value="Add"
+                                        className="home-table-add-btn"
+                                        handler={(e) => {
+                                            e?.stopPropagation()
+                                            setCoinAddId(coin.id)
+                                            setCoinAddName(coin.name)
+                                            setCoinAddPrice(coin.priceUsd)
+                                            setAddModalActive(true)
+                                        }}
+                                    />
                                 </div>
-
-                                <Button
-                                    value="Add"
-                                    className="home-table-add-btn"
-                                />
-                            </Link>
+                            </>
                         )
                     })}
                     {/* Пагинация */}
@@ -215,6 +223,23 @@ export default function Home() {
                     </div>
                 </div>
             </div>
+            <Modal active={filterModalActive} setActive={setFilterModalActive}>
+                <FilterContent
+                    applyFilters={applyFilters}
+                    discardFilters={discardFilters}
+                />
+            </Modal>
+            <Modal
+                active={addModalActive}
+                setActive={setAddModalActive}
+                width={window.innerWidth > 480 ? 10 : 30}
+            >
+                <AddModalBody
+                    coinId={coinAddId}
+                    coinName={coinAddName}
+                    coinPrice={coinAddPrice}
+                />
+            </Modal>
         </>
     )
 }
