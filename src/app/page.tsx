@@ -9,7 +9,7 @@ import {
     filterCoins,
     sortByAscending,
     sortByDescending,
-} from './utility'
+} from './shared/utility'
 import Input from './shared/input'
 import Button from './shared/button'
 import Modal from './shared/modal/modal'
@@ -194,17 +194,19 @@ export default function Home() {
                                     >
                                         {formatPrice(coin.changePercent24Hr)}%
                                     </div>
-                                    <Button
-                                        value="Add"
-                                        className="home-table-add-btn"
-                                        handler={(e) => {
-                                            e?.stopPropagation()
-                                            setCoinAddId(coin.id)
-                                            setCoinAddName(coin.name)
-                                            setCoinAddPrice(coin.priceUsd)
-                                            setAddModalActive(true)
-                                        }}
-                                    />
+                                    <div className="home-table-column">
+                                        <Button
+                                            value="Add"
+                                            className="home-table-add-btn"
+                                            handler={(e) => {
+                                                e?.stopPropagation()
+                                                setCoinAddId(coin.id)
+                                                setCoinAddName(coin.name)
+                                                setCoinAddPrice(coin.priceUsd)
+                                                setAddModalActive(true)
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         )
@@ -241,7 +243,9 @@ export default function Home() {
                     coinId={coinAddId}
                     coinName={coinAddName}
                     coinPrice={coinAddPrice}
-                    onCloseAdd={()=>{setAddModalActive(false)}}
+                    onCloseAdd={() => {
+                        setAddModalActive(false)
+                    }}
                 />
             </Modal>
         </>

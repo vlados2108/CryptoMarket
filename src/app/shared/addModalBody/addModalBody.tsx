@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Input from '../input'
 import Button from '../button'
 import styles from './addModalBody.module.scss'
-import { appPrefix } from '@/app/utility'
+import { appPrefix } from '@/app/shared/utility'
 
 interface IAddModalBodyProps {
     coinId: string

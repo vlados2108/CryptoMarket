@@ -8,7 +8,7 @@ import {
     coinPriceResponse,
 } from './types'
 import './coinInfo.scss'
-import { formatPrice, getLogoUrl, formatNumber, } from '@/app/utility'
+import { formatPrice, getLogoUrl, formatNumber, } from '@/app/shared/utility'
 import Button from '@/app/shared/button'
 import Chart from './chart'
 import Link from 'next/link'
