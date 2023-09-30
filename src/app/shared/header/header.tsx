@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { appPrefix, formatNumber } from '../utility'
 import styles from './header.module.scss'
 import Modal from '../modal'
-import BackpackModalBody from '../backpackModalBody/backpackModalBody'
+import {BackpackModalBody} from '../backpackModalBody'
 import { useGlobalContext } from '@/app/context'
 export default function Header() {
     const [price1, setPrice1] = useState(0)
