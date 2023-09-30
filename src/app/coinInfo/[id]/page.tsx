@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import axios from 'axios'
 import {
     coinInfo,
@@ -8,19 +8,18 @@ import {
     coinPriceResponse,
 } from './types'
 import './coinInfo.scss'
-import { formatPrice, getLogoUrl, formatNumber, } from '@/app/shared/utility'
-import Button from '@/app/shared/button'
+import { formatPrice, getLogoUrl, formatNumber } from '@/app/shared/Utility'
+import Button from '@/app/shared/Button'
 import Chart from './chart'
 import Link from 'next/link'
-import Modal from '@/app/shared/modal'
-import AddModalBody from '@/app/shared/addModalBody'
+import Modal from '@/app/shared/Modal'
+import AddModalBody from '@/app/shared/AddModalBody'
 
 interface ICoinInfoProps {
     params: { id: string }
 }
 const periods = ['1D', '7D', '1M']
-
-export default function CoinInfo({ params }: ICoinInfoProps) {
+const CoinInfo = ({ params }: ICoinInfoProps):ReactElement => {
     const [info, setInfo] = useState<coinInfo>()
     const [error, setError] = useState<any>(null)
     const [graphData, setGraphData] = useState<coinPrice[]>([])
@@ -30,10 +29,10 @@ export default function CoinInfo({ params }: ICoinInfoProps) {
     const [coinAddPrice, setCoinAddPrice] = useState(0)
     const [coinAddName, setCoinAddName] = useState('')
 
-    const now = Date.now() 
-    const oneDayAgo = now - 24 * 60 * 60 * 1000 
-    const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000 
-    const oneMonthAgo = now - 30 * 24 * 60 * 60 * 1000 
+    const now = Date.now()
+    const oneDayAgo = now - 24 * 60 * 60 * 1000
+    const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000
+    const oneMonthAgo = now - 30 * 24 * 60 * 60 * 1000
 
     useEffect(() => {
         if (params.id) {
@@ -124,7 +123,10 @@ export default function CoinInfo({ params }: ICoinInfoProps) {
                 </div>
 
                 <div className="coininfo-text price">
-                    {info.priceUsd < 0.01? (info.priceUsd.toFixed(7)): formatPrice(info.priceUsd)} $
+                    {info.priceUsd < 0.01
+                        ? info.priceUsd.toFixed(7)
+                        : formatPrice(info.priceUsd)}{' '}
+                    $
                 </div>
                 <div className="coininfo-text-key-value-container">
                     <div className="coininfo-text key">Rank: </div>
@@ -152,13 +154,16 @@ export default function CoinInfo({ params }: ICoinInfoProps) {
                 </div>
             </div>
 
-            <Button value="Add" className="coinInfo-btn" handler={() => {
-                setAddModalActive(true)
-                setCoinAddId(info.id)
-                setCoinAddName(info.name)
-                setCoinAddPrice(info.priceUsd)
-            }} 
-                />
+            <Button
+                value="Add"
+                className="coinInfo-btn"
+                handler={() => {
+                    setAddModalActive(true)
+                    setCoinAddId(info.id)
+                    setCoinAddName(info.name)
+                    setCoinAddPrice(info.priceUsd)
+                }}
+            />
 
             <div className="coininfo-chart-container">
                 <div className="coininfo-period-container">
@@ -192,9 +197,13 @@ export default function CoinInfo({ params }: ICoinInfoProps) {
                     coinId={coinAddId}
                     coinName={coinAddName}
                     coinPrice={coinAddPrice}
-                    onCloseAdd={()=>{setAddModalActive(false)}}
+                    onCloseAdd={() => {
+                        setAddModalActive(false)
+                    }}
                 />
             </Modal>
         </div>
     )
 }
+
+export default CoinInfo

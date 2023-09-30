@@ -1,9 +1,10 @@
-import React from 'react'
+'use client'
+import React, { ReactElement } from 'react'
 interface IArrowProps {
     sortAsc: () => void
     sortDsc: () => void
 }
-export default function Arrows({ sortAsc, sortDsc }: IArrowProps) {
+const Arrows = ({ sortAsc, sortDsc }: IArrowProps): ReactElement => {
     return (
         <div className="filter-image-container">
             <img
@@ -12,7 +13,7 @@ export default function Arrows({ sortAsc, sortDsc }: IArrowProps) {
                 onClick={() => {
                     sortAsc()
                 }}
-                loading='lazy'
+                loading="lazy"
             ></img>
             <img
                 src="/arrowdown.png"
@@ -20,8 +21,9 @@ export default function Arrows({ sortAsc, sortDsc }: IArrowProps) {
                 onClick={() => {
                     sortDsc()
                 }}
-                loading='lazy'
+                loading="lazy"
             ></img>
         </div>
     )
 }
+export default Arrows

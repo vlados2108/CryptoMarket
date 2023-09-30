@@ -1,19 +1,19 @@
 'use client'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { appPrefix, formatNumber } from '../utility'
-import styles from './header.module.scss'
-import Modal from '../modal'
-import {BackpackModalBody} from '../backpackModalBody'
+import React, { ReactElement, useEffect, useState } from 'react'
+import { appPrefix, formatNumber } from '../Utility'
+import styles from './Header.module.scss'
+import Modal from '../Modal'
+import BackpackModalBody from '../BackpackModalBody'
 import { useGlobalContext } from '@/app/context'
-export default function Header() {
+const Header = (): ReactElement => {
     const [price1, setPrice1] = useState(0)
     const [price2, setPrice2] = useState(0)
     const [price3, setPrice3] = useState(0)
     const [backpackSum, setBackpackSum] = useState(0)
     const [diff, setDiff] = useState(0)
-    const [backpackModalActive,setBackpackModalActive] = useState(false)
-    const {dateAdded} = useGlobalContext()
+    const [backpackModalActive, setBackpackModalActive] = useState(false)
+    const { dateAdded } = useGlobalContext()
     useEffect(() => {
         axios.get(`https://api.coincap.io/v2/assets/bitcoin`).then((res) => {
             setPrice1(res.data.data.priceUsd)
@@ -46,7 +46,7 @@ export default function Header() {
         }
         Promise.all(fetchCurrentPrices).then((prices) => {
             const currSum = prices.reduce((acc, curr) => acc + curr, 0)
-            const diff = mySum-currSum
+            const diff = mySum - currSum
 
             setBackpackSum(mySum)
             setDiff(diff)
@@ -58,43 +58,53 @@ export default function Header() {
             <div className={styles['header-trending-container']}>
                 <div className={styles['header-trending']}>Trending:</div>
                 <div className={styles['header-tending-row']}>
-                    <div className={styles['header-trending-text']}>
-                        BTC:
-                    </div>
+                    <div className={styles['header-trending-text']}>BTC:</div>
                     <div className={styles['header-trending-text']}>
                         {formatNumber(price1)} $
                     </div>
                 </div>
                 <div className={styles['header-tending-row']}>
-                    <div className={styles['header-trending-text']}>
-                        ETH:
-                    </div>
+                    <div className={styles['header-trending-text']}>ETH:</div>
                     <div className={styles['header-trending-text']}>
                         {formatNumber(price2)} $
                     </div>
                 </div>
                 <div className={styles['header-tending-row']}>
-                    <div className={styles['header-trending-text']}>
-                        SOL:
-                    </div>
+                    <div className={styles['header-trending-text']}>SOL:</div>
                     <div className={styles['header-trending-text']}>
                         {formatNumber(price3)} $
                     </div>
                 </div>
             </div>
 
-            <div className={styles['header-backpack-container']} onClick={()=>{setBackpackModalActive(true)}}>
+            <div
+                className={styles['header-backpack-container']}
+                onClick={() => {
+                    setBackpackModalActive(true)
+                }}
+            >
                 <div className={styles['header-backpack']}>Backpack:</div>
-                <div className={`${styles['header-backpack-text']} ${styles['price']}`}>
+                <div
+                    className={`${styles['header-backpack-text']} ${styles['price']}`}
+                >
                     {formatNumber(backpackSum)} USD
                 </div>
-                <div className={`${styles['header-backpack-text']} ${styles['diff']}`}>
-                    {diff > 0? '+' : ''}{formatNumber(diff)}  ({formatNumber(diff / 100)} %)
+                <div
+                    className={`${styles['header-backpack-text']} ${styles['diff']}`}
+                >
+                    {diff > 0 ? '+' : ''}
+                    {formatNumber(diff)} ({formatNumber(diff / 100)} %)
                 </div>
             </div>
-            <Modal active={backpackModalActive} setActive={setBackpackModalActive} width={window.innerWidth <= 480 ? 90 : 40}>
-                <BackpackModalBody/>
+            <Modal
+                active={backpackModalActive}
+                setActive={setBackpackModalActive}
+                width={window.innerWidth <= 480 ? 90 : 40}
+            >
+                <BackpackModalBody />
             </Modal>
         </div>
     )
 }
+
+export default Header

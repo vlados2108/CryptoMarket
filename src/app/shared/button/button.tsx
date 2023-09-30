@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+'use client'
+import React, { ReactElement, useState } from 'react'
 import classNames from 'classnames'
-import styles from './button.module.scss'
+import styles from './Button.module.scss'
 type InputProps = {
     handler?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
     className?: string
@@ -8,13 +9,13 @@ type InputProps = {
     value?: string
     key?: number
 }
-export default function Button({
+ const Button = ({
     handler = undefined,
     className,
     customAttrs,
     value,
     key,
-}: InputProps) {
+}: InputProps): ReactElement => {
     return (
         <button
             key={key}
@@ -31,3 +32,5 @@ export default function Button({
         </button>
     )
 }
+
+export default Button

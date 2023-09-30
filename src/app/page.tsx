@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { Context, ReactElement, useEffect, useState } from 'react'
 import axios from 'axios'
 import { Coin, CoinResponse, Filters } from './types'
 import './home.scss'
@@ -9,17 +9,17 @@ import {
     filterCoins,
     sortByAscending,
     sortByDescending,
-} from './shared/utility'
-import Input from './shared/input'
-import Button from './shared/button'
-import Modal from './shared/modal/modal'
+} from './shared/Utility'
+import Input from './shared/Input'
+import Button from './shared/Button'
+import Modal from './shared/Modal/Modal'
 import FilterContent from './filterContent'
 import Arrows from './arrows'
 import Link from 'next/link'
-import AddModalBody from './shared/addModalBody'
+import AddModalBody from './shared/AddModalBody'
 import { useRouter } from 'next/navigation'
 
-export default function Home() {
+const Home = ():ReactElement => {
     const [coins, setCoins] = useState<Coin[]>([])
     const [oldCoins, setOldCoins] = useState<Coin[]>([])
     const [currentPage, setCurrentPage] = useState(1)
@@ -100,7 +100,7 @@ export default function Home() {
     return (
         <>
             <div className="home-container">
-                <Input<string>
+                <Input
                     placeholder="Search coin"
                     className="search-input"
                     handler={onSearch}
@@ -257,3 +257,5 @@ export default function Home() {
         </>
     )
 }
+
+export default Home

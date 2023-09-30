@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import Input from '../input'
-import Button from '../button'
-import styles from './addModalBody.module.scss'
-import { appPrefix } from '@/app/shared/utility'
+'use client'
+import React, { ReactElement, useState } from 'react'
+import Input from '../Input'
+import Button from '../Button'
+import styles from './AddModalBody.module.scss'
+import { appPrefix } from '@/app/shared/Utility'
 import { useGlobalContext } from '@/app/context'
 
 interface IAddModalBodyProps {
@@ -11,12 +12,12 @@ interface IAddModalBodyProps {
     coinPrice: number
     onCloseAdd: () => void
 }
-export default function AddModalBody({
+const AddModalBody = ({
     coinId,
     coinName,
     coinPrice,
     onCloseAdd,
-}: IAddModalBodyProps) {
+}: IAddModalBodyProps): ReactElement => {
     const [n, setN] = useState('')
     const [error, setError] = useState<any>(null)
     const { dateAdded, setDateAdded } = useGlobalContext()
@@ -94,3 +95,5 @@ export default function AddModalBody({
         </div>
     )
 }
+
+export default AddModalBody

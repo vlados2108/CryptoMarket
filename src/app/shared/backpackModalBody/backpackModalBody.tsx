@@ -1,7 +1,8 @@
+'use client'
 import React, { ReactElement, useEffect, useState } from 'react'
-import styles from './backpackModalBody.module.scss'
-import { appPrefix, formatNumber } from '@/app/shared/utility'
-import Button from '../button'
+import styles from './BackpackModalBody.module.scss'
+import { appPrefix, formatNumber } from '@/app/shared/Utility'
+import Button from '../Button'
 import { useGlobalContext } from '@/app/context'
 interface coinInBackPack {
     id: string
@@ -10,9 +11,9 @@ interface coinInBackPack {
     count: number
     totalPrice: number
 }
-export const BackpackModalBody = (): ReactElement => {
+const BackpackModalBody = (): ReactElement => {
     const [coins, setCoins] = useState<coinInBackPack[]>([])
-    const { dateAdded } = useGlobalContext()
+    const { dateAdded,setDateAdded } = useGlobalContext()
     useEffect(() => {
         const coins: coinInBackPack[] = []
         for (let key in localStorage) {
@@ -31,6 +32,7 @@ export const BackpackModalBody = (): ReactElement => {
         localStorage.removeItem(appPrefix + id)
         const newCoins = coins.filter((coin) => coin.id != id)
         setCoins(newCoins)
+        setDateAdded(Math.random())
     }
 
     return (
@@ -85,3 +87,5 @@ export const BackpackModalBody = (): ReactElement => {
         </div>
     )
 }
+
+export default BackpackModalBody

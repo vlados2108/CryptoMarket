@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import Input from './shared/input'
-import Button from './shared/button'
+import React, { ReactElement, useState } from 'react'
+import Input from './shared/Input'
+import Button from './shared/Button'
 import styles from './filterContent.module.scss'
 import { Filters } from './types'
 
@@ -9,18 +9,18 @@ interface IFilterContentProps {
     discardFilters: () => void
 }
 
-export default function FilterContent({
+const FilterContent = ({
     applyFilters,
     discardFilters,
-}: IFilterContentProps) {
-    const [price1, setPrice1] = useState<number | undefined>()
-    const [price2, setPrice2] = useState<number | undefined>()
+}: IFilterContentProps):ReactElement=>{
+    const [price1, setPrice1] = useState('')
+    const [price2, setPrice2] = useState('')
 
-    const [cap1, setCap1] = useState<number | undefined>()
-    const [cap2, setCap2] = useState<number | undefined>()
+    const [cap1, setCap1] = useState('')
+    const [cap2, setCap2] = useState('')
 
-    const [perc1, setPerc1] = useState<number | undefined>()
-    const [perc2, setPerc2] = useState<number | undefined>()
+    const [perc1, setPerc1] = useState('')
+    const [perc2, setPerc2] = useState('')
 
     const apply = () => {
         const filters: Filters = {
@@ -44,7 +44,7 @@ export default function FilterContent({
                 <div className={styles['filter-name']}>Price</div>
 
                 <div className={styles['filter-inputs-container']}>
-                    <Input<number | undefined>
+                    <Input
                         type="number"
                         className={styles['filter-input']}
                         placeholder="0$"
@@ -52,7 +52,7 @@ export default function FilterContent({
                         setValue={setPrice1}
                     />
                     <div className={styles['filter-to']}>to</div>
-                    <Input<number | undefined>
+                    <Input
                         type="number"
                         className={styles['filter-input']}
                         placeholder="99 999$"
@@ -65,7 +65,7 @@ export default function FilterContent({
             <div className={styles['filter-container']}>
                 <div className={styles['filter-name']}>Market cap</div>
                 <div className={styles['filter-inputs-container']}>
-                    <Input<number | undefined>
+                    <Input
                         type="number"
                         className={styles['filter-input']}
                         placeholder="0$"
@@ -73,7 +73,7 @@ export default function FilterContent({
                         setValue={setCap1}
                     />
                     <div className={styles['filter-to']}>to</div>
-                    <Input<number | undefined>
+                    <Input
                         type="number"
                         className={styles['filter-input']}
                         placeholder="999 999 999 999$"
@@ -86,7 +86,7 @@ export default function FilterContent({
             <div className={styles['filter-container']}>
                 <div className={styles['filter-name']}>24h %</div>
                 <div className={styles['filter-inputs-container']}>
-                    <Input<number | undefined>
+                    <Input
                         type="number"
                         className={styles['filter-input']}
                         placeholder="-100%"
@@ -94,7 +94,7 @@ export default function FilterContent({
                         setValue={setPerc1}
                     />
                     <div className={styles['filter-to']}>to</div>
-                    <Input<number | undefined>
+                    <Input
                         type="number"
                         className={styles['filter-input']}
                         placeholder="1000%"
@@ -123,3 +123,5 @@ export default function FilterContent({
         </div>
     )
 }
+
+export default FilterContent

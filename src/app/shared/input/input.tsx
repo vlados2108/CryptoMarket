@@ -1,17 +1,18 @@
-import React, { SetStateAction, Dispatch } from 'react'
+'use client'
+import React, { SetStateAction, Dispatch, ReactElement } from 'react'
 import classNames from 'classnames'
-import styles from './input.module.scss'
+import styles from './Input.module.scss'
 
-type InputProps<T> = {
-    handler?: (value: T) => void
+type InputProps = {
+    handler?: (value: string) => void
     className?: string
     placeholder?: string
     customAttrs?: Record<string, string>
     type?: string
-    value?: T
-    setValue?: Dispatch<SetStateAction<T>>
+    value?: string
+    setValue?: Dispatch<SetStateAction<string>>
 }
-export default function Input<T>({
+const Input = ({
     handler,
     className,
     placeholder,
@@ -19,7 +20,7 @@ export default function Input<T>({
     type,
     value,
     setValue,
-}: InputProps<T>) {
+}: InputProps):ReactElement => {
     return (
         <input
             placeholder={placeholder}
@@ -35,7 +36,7 @@ export default function Input<T>({
             }
             type={type}
             onChange={(e) => {
-                const inputValue = e.target.value as T
+                const inputValue = e.target.value
                 const parsedValue =
                     type === 'number' ? Number(inputValue) : inputValue
                 setValue ? setValue(inputValue) : ''
@@ -44,3 +45,5 @@ export default function Input<T>({
         ></input>
     )
 }
+
+export default Input

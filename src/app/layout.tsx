@@ -1,11 +1,12 @@
-import Header from './shared/header'
+import Header from './shared/Header'
 import './layout.scss'
 import { GlobalContextProvider } from './context'
-export default function RootLayout({
+import { ReactElement } from 'react'
+const RootLayout =({
     children,
 }: {
     children: React.ReactNode
-}) {
+}) => {
     return (
         <html lang="en">
             <body>
@@ -17,3 +18,4 @@ export default function RootLayout({
         </html>
     )
 }
+export default RootLayout

@@ -1,17 +1,18 @@
-import React, { Dispatch, ReactNode, SetStateAction } from 'react'
-import styles from './modal.module.scss'
+'use client'
+import React, { Dispatch, ReactElement, ReactNode, SetStateAction } from 'react'
+import styles from './Modal.module.scss'
 interface ActiveProps {
     active: boolean
     setActive: Dispatch<SetStateAction<boolean>>
     children?: ReactNode
     width?: number
 }
-export default function Modal({
+const Modal = ({
     active,
     setActive,
     children,
     width = 50,
-}: ActiveProps) {
+}: ActiveProps): ReactElement => {
     return (
         <div
             className={`${styles.modal} ${active && styles.active}`}
@@ -31,3 +32,5 @@ export default function Modal({
         </div>
     )
 }
+
+export default Modal
