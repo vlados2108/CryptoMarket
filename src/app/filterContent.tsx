@@ -9,100 +9,83 @@ interface IFilterContentProps {
     discardFilters: () => void
 }
 
+const params = ['Price', 'Market cap', '24h %']
+
 const FilterContent = ({
     applyFilters,
     discardFilters,
-}: IFilterContentProps):ReactElement=>{
-    const [price1, setPrice1] = useState('')
-    const [price2, setPrice2] = useState('')
+}: IFilterContentProps): ReactElement => {
+    const [paramValues, setParamValues] = useState<any>({
+        Price1: '',
+        Price2: '',
+        '24h %1': '',
+        '24h %2': '',
+        'Market cap1': '',
+        'Market cap2': '',
+    })
 
-    const [cap1, setCap1] = useState('')
-    const [cap2, setCap2] = useState('')
-
-    const [perc1, setPerc1] = useState('')
-    const [perc2, setPerc2] = useState('')
+    const handleInputChange = (param: string, value: string) => {
+        setParamValues((prevValues: any) => ({
+            ...prevValues,
+            [param]: value,
+        }))
+    }
 
     const apply = () => {
         const filters: Filters = {
-            price1: price1,
-            price2: price2,
-            cap1: cap1,
-            cap2: cap2,
-            perc1: perc1,
-            perc2: perc2,
+            price1: paramValues[params[0] + '1'],
+            price2: paramValues[params[0] + '2'],
+            cap1: paramValues[params[1] + '1'],
+            cap2: paramValues[params[1] + '2'],
+            perc1: paramValues[params[2] + '1'],
+            perc2: paramValues[params[2] + '2'],
         }
+        console.log(filters)
         applyFilters(filters)
     }
     const discard = () => {
+        params.map((param) => {
+            handleInputChange(param + '1', '')
+            handleInputChange(param + '2', '')
+        })
         discardFilters()
     }
 
     return (
         <div className={styles['filters-container']}>
-            <div className={styles['filter-container']}>
-                <div className={styles['filter-name']}>Price</div>
+            {params.map((param) => {
+                return (
+                    <div className={styles['filter-container']}>
+                        <div className={styles['filter-name']}>{param}</div>
 
-                <div className={styles['filter-inputs-container']}>
-                    <Input
-                        type="number"
-                        className={styles['filter-input']}
-                        placeholder="0$"
-                        value={price1}
-                        setValue={setPrice1}
-                    />
-                    <div className={styles['filter-to']}>to</div>
-                    <Input
-                        type="number"
-                        className={styles['filter-input']}
-                        placeholder="99 999$"
-                        value={price2}
-                        setValue={setPrice2}
-                    />
-                </div>
-            </div>
-
-            <div className={styles['filter-container']}>
-                <div className={styles['filter-name']}>Market cap</div>
-                <div className={styles['filter-inputs-container']}>
-                    <Input
-                        type="number"
-                        className={styles['filter-input']}
-                        placeholder="0$"
-                        value={cap1}
-                        setValue={setCap1}
-                    />
-                    <div className={styles['filter-to']}>to</div>
-                    <Input
-                        type="number"
-                        className={styles['filter-input']}
-                        placeholder="999 999 999 999$"
-                        value={cap2}
-                        setValue={setCap2}
-                    />
-                </div>
-            </div>
-
-            <div className={styles['filter-container']}>
-                <div className={styles['filter-name']}>24h %</div>
-                <div className={styles['filter-inputs-container']}>
-                    <Input
-                        type="number"
-                        className={styles['filter-input']}
-                        placeholder="-100%"
-                        value={perc1}
-                        setValue={setPerc1}
-                    />
-                    <div className={styles['filter-to']}>to</div>
-                    <Input
-                        type="number"
-                        className={styles['filter-input']}
-                        placeholder="1000%"
-                        value={perc2}
-                        setValue={setPerc2}
-                    />
-                </div>
-            </div>
-
+                        <div className={styles['filter-inputs-container']}>
+                            <Input
+                                type="number"
+                                className={styles['filter-input']}
+                                placeholder={param !== '24h %' ? '0$' : '-100%'}
+                                value={paramValues[param + '1']}
+                                handler={(value) => {
+                                    handleInputChange(param + '1', value)
+                                }}
+                            />
+                            <div className={styles['filter-to']}>to</div>
+                            <Input
+                                type="number"
+                                className={styles['filter-input']}
+                                placeholder={
+                                    param !== '24h %'
+                                        ? '999 999 999 999$'
+                                        : '1000%'
+                                }
+                                value={paramValues[param + '2']}
+                                handler={(value) => {
+                                    handleInputChange(param + '2', value)
+                                }}
+                            />
+                        </div>
+                    </div>
+                )
+            })}
             <div className={styles['filterContent-btn-container']}>
                 <Button
                     className={styles['filterContent-btn']}
