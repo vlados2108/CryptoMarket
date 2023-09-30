@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import styles from './backpackModalBody.module.scss'
 import { appPrefix, formatNumber } from '@/app/shared/utility'
-import { coinInBackPack } from './types'
 import Button from '../button'
 import { useGlobalContext } from '@/app/context'
-
-export default function BackpackModalBody() {
+interface coinInBackPack {
+    id: string
+    name: string
+    price: number
+    count: number
+    totalPrice: number
+}
+export const BackpackModalBody = (): ReactElement => {
     const [coins, setCoins] = useState<coinInBackPack[]>([])
-    const {dateAdded} = useGlobalContext()
+    const { dateAdded } = useGlobalContext()
     useEffect(() => {
         const coins: coinInBackPack[] = []
         for (let key in localStorage) {
@@ -24,12 +29,12 @@ export default function BackpackModalBody() {
 
     const deleteCoin = (id: string) => {
         localStorage.removeItem(appPrefix + id)
-        const newCoins = coins.filter((coin)=>coin.id!=id)
+        const newCoins = coins.filter((coin) => coin.id != id)
         setCoins(newCoins)
     }
 
     return (
-        <div className={styles['backpack-container']}>
+        <div className={styles.backpackContainer}>
             <div className={styles['backpack-header']}>Backpack</div>
             <div className={styles['backpack-body']}>
                 <div
