@@ -124,7 +124,7 @@ export default function CoinInfo({ params }: ICoinInfoProps) {
                 </div>
 
                 <div className="coininfo-text price">
-                    {formatNumber(info.priceUsd)} $
+                    {info.priceUsd < 0.01? (info.priceUsd.toFixed(7)): formatPrice(info.priceUsd)} $
                 </div>
                 <div className="coininfo-text-key-value-container">
                     <div className="coininfo-text key">Rank: </div>
