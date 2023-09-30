@@ -6,10 +6,6 @@
         width: 10%;
         margin: 10px 65%;
         background: #b8b9bd;
-        // &:hover {
-        //     background-color: #dfdede;
-        //     transition: all 0.5s;
-        // }
     }
 
     .home-table {
@@ -96,6 +92,7 @@
     .home-container {
         .home-table {
             .home-table-row {
+                grid-template-columns: 1fr 1fr 1fr 2fr 1fr 1fr;
                 .home-table-column {
                     font-size: calc(
                         15px + (25 - 15) * ((100vw - 390px) / (1920 - 390))
