@@ -1,6 +1,6 @@
 import { Coin, Filters } from '../../types'
 
-export const appPrefix = "cryptomarket_"
+export const appPrefix = 'cryptomarket_'
 export const formatPrice = (price: number): string => {
     if (Math.abs(price) >= 1e9) {
         return (price / 1e9).toFixed(2) + 'b'
@@ -48,22 +48,13 @@ export function sortByDescending(coins: Coin[], key: keyof Coin) {
 export function filterCoins(coins: Coin[], filters: Filters) {
     return coins.filter((coin) => {
         // Функция проверки диапазона
-        const isInRange = (
-            value: number,
-            min: number | undefined,
-            max: number | undefined
-        ) => {
-            if (
-                min !== undefined &&
-                min.toString() !== '' &&
-                max !== undefined &&
-                max.toString() !== ''
-            ) {
-                return value >= min && value <= max
-            } else if (min !== undefined && min.toString() !== '') {
-                return value >= min
-            } else if (max !== undefined && max.toString() !== '') {
-                return value <= max
+        const isInRange = (value: number, min: string, max: string) => {
+            if (min !== '' && max !== '') {
+                return value >= parseFloat(min) && value <= parseFloat(max)
+            } else if (min !== '') {
+                return value >= parseFloat(min)
+            } else if (max !== '') {
+                return value <= parseFloat(max)
             }
             return true
         }
