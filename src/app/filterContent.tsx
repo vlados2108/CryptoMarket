@@ -31,7 +31,6 @@ const FilterContent = ({
             perc1: perc1,
             perc2: perc2,
         }
-        console.log(filters)
         applyFilters(filters)
     }
     const discard = () => {
