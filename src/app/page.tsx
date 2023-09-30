@@ -89,29 +89,11 @@ export default function Home() {
         setCoins(oldCoins)
     }
 
-    const ascPrice = () => {
-        const sortedCoins = sortByAscending(coins, 'priceUsd')
-        setCoins(sortedCoins)
-    }
-    const dscPrice = () => {
-        const sortedCoins = sortByDescending(coins, 'priceUsd')
-        setCoins(sortedCoins)
-    }
-
-    const ascCap = () => {
-        const sortedCoins = sortByAscending(coins, 'marketCapUsd')
-        setCoins(sortedCoins)
-    }
-    const dscCap = () => {
-        const sortedCoins = sortByDescending(coins, 'marketCapUsd')
-        setCoins(sortedCoins)
-    }
-    const ascPerc = () => {
-        const sortedCoins = sortByAscending(coins, 'changePercent24Hr')
-        setCoins(sortedCoins)
-    }
-    const dscPerc = () => {
-        const sortedCoins = sortByDescending(coins, 'changePercent24Hr')
+    const sort = (direction: string, criteria: keyof Coin) => {
+        const sortedCoins =
+            direction == 'asc'
+                ? sortByAscending(coins, criteria)
+                : sortByDescending(coins, criteria)
         setCoins(sortedCoins)
     }
 
@@ -140,7 +122,14 @@ export default function Home() {
                             onClick={() => {}}
                         >
                             Price
-                            <Arrows sortAsc={ascPrice} sortDsc={dscPrice} />
+                            <Arrows
+                                sortAsc={() => {
+                                    sort('asc', 'priceUsd')
+                                }}
+                                sortDsc={() => {
+                                    sort('dsc', 'priceUsd')
+                                }}
+                            />
                         </div>
 
                         <div
@@ -148,14 +137,28 @@ export default function Home() {
                             onClick={() => {}}
                         >
                             Market cap
-                            <Arrows sortAsc={ascCap} sortDsc={dscCap} />
+                            <Arrows
+                                sortAsc={() => {
+                                    sort('asc', 'marketCapUsd')
+                                }}
+                                sortDsc={() => {
+                                    sort('dsc', 'marketCapUsd')
+                                }}
+                            />
                         </div>
                         <div
                             className="home-table-column header"
                             onClick={() => {}}
                         >
                             24h %
-                            <Arrows sortAsc={ascPerc} sortDsc={dscPerc} />
+                            <Arrows
+                                sortAsc={() => {
+                                    sort('asc', 'changePercent24Hr')
+                                }}
+                                sortDsc={() => {
+                                    sort('dsc', 'changePercent24Hr')
+                                }}
+                            />
                         </div>
                         <div className="home-table-column header">Buy</div>
                     </div>
@@ -180,7 +183,10 @@ export default function Home() {
                                     </div>
 
                                     <div className="home-table-column">
-                                        {formatPrice(coin.priceUsd)} $
+                                        {coin.priceUsd < 0.01
+                                            ? '<' + formatPrice(coin.priceUsd)
+                                            : formatPrice(coin.priceUsd)}{' '}
+                                        $
                                     </div>
                                     <div className="home-table-column">
                                         {formatPrice(coin.marketCapUsd)} $
@@ -199,7 +205,7 @@ export default function Home() {
                                             value="Add"
                                             className="home-table-add-btn"
                                             handler={(e) => {
-                                                e?.stopPropagation()
+                                                e.stopPropagation()
                                                 setCoinAddId(coin.id)
                                                 setCoinAddName(coin.name)
                                                 setCoinAddPrice(coin.priceUsd)
