@@ -1,1 +1,1 @@
-export * from "./backpackModalBody"
+export {default} from "./BackpackModalBody"

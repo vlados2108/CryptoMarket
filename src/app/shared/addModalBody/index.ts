@@ -1,1 +1,1 @@
-export {default} from "./addModalBody"
+export {default} from "./AddModalBody"
