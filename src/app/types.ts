@@ -24,10 +24,10 @@ export interface Coin {
 }
 
 export interface Filters {
-    price1: number | undefined
-    price2: number | undefined
-    cap1: number | undefined
-    cap2: number | undefined
-    perc1: number | undefined
-    perc2: number | undefined
+    price1: string
+    price2: string
+    cap1: string
+    cap2: string
+    perc1: string
+    perc2: string
 }
