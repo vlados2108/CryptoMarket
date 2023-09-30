@@ -97,7 +97,6 @@
     .home-container {
         .home-table {
             .home-table-row {
-                grid-template-columns: 1fr 1fr 1fr 2fr 1fr 1fr;
                 .home-table-column {
                     font-size: calc(
                         15px + (25 - 15) * ((100vw - 390px) / (1920 - 390))
@@ -139,11 +138,12 @@
         .home-table {
             width: 100%;
             .home-table-row {
+                grid-template-columns: 1fr 1fr 2fr 2fr 1fr 1fr;
                 .home-table-column {
                     height: 100%;
                     width: 100%;
                     .home-table-image {
-                        width: 50%;
+                        width: 70%;
                     }
                 }
             }
