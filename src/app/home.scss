@@ -62,7 +62,11 @@
                 }
                 .home-table-add-btn {
                     height: 5vh;
-                    background: #b8b9bd;
+                    background: #b8b9bd;       
+                    &:hover{
+                        background-color: #DFDEDE;
+                        transition: all 0.5s;
+                    }
                 }
             }
         }
@@ -86,6 +90,7 @@
     width: 50%;
     margin: 20px auto;
     height: 5vh;
+    text-align: center;
 }
 
 @media (max-width: 1800px) {
