@@ -83,10 +83,12 @@ const Home = ():ReactElement => {
         filteredCoins.length !== 0
             ? setCoins(filteredCoins)
             : setCoins(oldCoins)
+        setFilterModalActive(false)
     }
 
     const discardFilters = () => {
         setCoins(oldCoins)
+        setFilterModalActive(false)
     }
 
     const sort = (direction: string, criteria: keyof Coin) => {
@@ -217,11 +219,10 @@ const Home = ():ReactElement => {
                             </div>
                         )
                     })}
-                    {/* Пагинация */}
+        
                     <div className="pagination">
                         {Array.from({ length: totalPages }).map((_, index) => (
                             <Button
-                                //key={index}
                                 handler={() => handlePageChange(index + 1)}
                                 className={
                                     currentPage === index + 1
