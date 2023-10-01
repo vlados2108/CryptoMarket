@@ -2,7 +2,7 @@
 import React, { ReactElement, useState } from 'react'
 import Input from '../Input'
 import Button from '../Button'
-import { appPrefix } from '@/app/shared/Utility'
+import { appPrefix } from '../Utility'
 import { useGlobalContext } from '@/app/Context'
 import styles from './AddModalBody.module.scss'
 

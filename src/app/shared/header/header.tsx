@@ -4,7 +4,7 @@ import axios from 'axios'
 import Modal from '../Modal'
 import BackpackModalBody from '../BackpackModalBody'
 import { appPrefix, formatNumber } from '../Utility'
-import { useGlobalContext } from '@/app/Context'
+import { useGlobalContext } from '../../Context'
 import styles from './Header.module.scss'
 
 const Header = (): ReactElement => {

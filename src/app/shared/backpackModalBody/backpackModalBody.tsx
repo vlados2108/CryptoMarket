@@ -1,8 +1,8 @@
 'use client'
 import React, { ReactElement, useEffect, useState } from 'react'
 import Button from '../Button'
-import { appPrefix, formatNumber } from '@/app/shared/Utility'
-import { useGlobalContext } from '@/app/Context'
+import { appPrefix, formatNumber } from '../Utility'
+import { useGlobalContext } from '../../Context'
 import styles from './BackpackModalBody.module.scss'
 
 interface coinInBackPack {

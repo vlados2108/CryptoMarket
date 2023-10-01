@@ -3,16 +3,16 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import Chart from './chart'
-import Button from '@/app/shared/Button'
-import Modal from '@/app/shared/Modal'
-import AddModalBody from '@/app/shared/AddModalBody'
+import Button from '../../shared/Button'
+import Modal from '../../shared/Modal'
+import AddModalBody from '../../shared/AddModalBody'
 import {
     coinInfo,
     coinInfoResponse,
     coinPrice,
     coinPriceResponse,
 } from './types'
-import { formatPrice, getLogoUrl, formatNumber } from '@/app/shared/Utility'
+import { formatPrice, getLogoUrl, formatNumber } from '../../shared/Utility'
 import styles from './CoinInfo.module.scss'
 
 interface ICoinInfoProps {
