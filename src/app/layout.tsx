@@ -3,7 +3,7 @@ import Header from './shared/Header'
 import { GlobalContextProvider } from './Context'
 import './layout.scss'
 
-const RootLayout =({
+const RootLayout =({ 
     children,
 }: {
     children: ReactNode
