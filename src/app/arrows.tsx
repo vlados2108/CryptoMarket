@@ -1,15 +1,16 @@
 'use client'
 import React, { ReactElement } from 'react'
+import styles from './Arrows.module.scss'
 interface IArrowProps {
     sortAsc: () => void
     sortDsc: () => void
 }
 const Arrows = ({ sortAsc, sortDsc }: IArrowProps): ReactElement => {
     return (
-        <div className="filter-image-container">
+        <div className={styles['filter-image-container']}>
             <img
                 src="/arrowup.png"
-                className="filter-image up"
+                className={`${styles['filter-image']} ${styles['up']}`}
                 onClick={() => {
                     sortAsc()
                 }}
@@ -17,7 +18,7 @@ const Arrows = ({ sortAsc, sortDsc }: IArrowProps): ReactElement => {
             ></img>
             <img
                 src="/arrowdown.png"
-                className="filter-image down"
+                className={`${styles['filter-image']} ${styles['down']}`}
                 onClick={() => {
                     sortDsc()
                 }}

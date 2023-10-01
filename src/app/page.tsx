@@ -2,7 +2,7 @@
 import { Context, ReactElement, useEffect, useState } from 'react'
 import axios from 'axios'
 import { Coin, CoinResponse, Filters } from './types'
-import './home.scss'
+import styles from './home.module.scss'
 import {
     formatPrice,
     getLogoUrl,
@@ -19,7 +19,7 @@ import Link from 'next/link'
 import AddModalBody from './shared/AddModalBody'
 import { useRouter } from 'next/navigation'
 
-const Home = ():ReactElement => {
+const Home = (): ReactElement => {
     const [coins, setCoins] = useState<Coin[]>([])
     const [oldCoins, setOldCoins] = useState<Coin[]>([])
     const [currentPage, setCurrentPage] = useState(1)
@@ -101,26 +101,34 @@ const Home = ():ReactElement => {
 
     return (
         <>
-            <div className="home-container">
+            <div className={styles['home-container']}>
                 <Input
                     placeholder="Search coin"
-                    className="search-input"
+                    className={styles['search-input']}
                     handler={onSearch}
                     type="search"
                 ></Input>
                 <Button
-                    className="home-filter-btn"
+                    className={styles['home-filter-btn']}
                     handler={() => {
                         setFilterModalActive(true)
                     }}
                     value="Filters"
                 />
-                <div className="home-table">
-                    <div className="home-table-row header">
-                        <div className="home-table-column header">Symbol</div>
-                        <div className="home-table-column header">Logo</div>
+                <div className={styles['home-table']}>
+                    <div className={`${styles['home-table-row']} ${styles['header']}`}>
                         <div
-                            className="home-table-column header"
+                            className={`${styles['home-table-column']} ${styles['header']}`}
+                        >
+                            Symbol
+                        </div>
+                        <div
+                            className={`${styles['home-table-column']} ${styles['header']}`}
+                        >
+                            Logo
+                        </div>
+                        <div
+                            className={`${styles['home-table-column']} ${styles['header']}`}
                             onClick={() => {}}
                         >
                             Price
@@ -135,7 +143,7 @@ const Home = ():ReactElement => {
                         </div>
 
                         <div
-                            className="home-table-column header"
+                            className={`${styles['home-table-column']} ${styles['header']}`}
                             onClick={() => {}}
                         >
                             Market cap
@@ -149,7 +157,7 @@ const Home = ():ReactElement => {
                             />
                         </div>
                         <div
-                            className="home-table-column header"
+                            className={`${styles['home-table-column']} ${styles['header']}`}
                             onClick={() => {}}
                         >
                             24h %
@@ -162,7 +170,11 @@ const Home = ():ReactElement => {
                                 }}
                             />
                         </div>
-                        <div className="home-table-column header">Buy</div>
+                        <div
+                            className={`${styles['home-table-column']} ${styles['header']}`}
+                        >
+                            Buy
+                        </div>
                     </div>
                     {currentCoins.map((coin) => {
                         return (
@@ -171,41 +183,55 @@ const Home = ():ReactElement => {
                                     onClick={() =>
                                         router.push(`coinInfo/${coin.id}`)
                                     }
-                                    className="home-table-row"
+                                    className={styles['home-table-row']}
                                 >
-                                    <div className="home-table-column">
+                                    <div
+                                        className={styles['home-table-column']}
+                                    >
                                         {coin.symbol}
                                     </div>
-                                    <div className="home-table-column">
+                                    <div
+                                        className={styles['home-table-column']}
+                                    >
                                         <img
                                             src={coin.logoUrl}
-                                            className="home-table-image"
+                                            className={
+                                                styles['home-table-image']
+                                            }
                                             loading="lazy"
                                         ></img>
                                     </div>
 
-                                    <div className="home-table-column">
+                                    <div
+                                        className={styles['home-table-column']}
+                                    >
                                         {coin.priceUsd < 0.01
                                             ? '<' + formatPrice(coin.priceUsd)
                                             : formatPrice(coin.priceUsd)}{' '}
                                         $
                                     </div>
-                                    <div className="home-table-column">
+                                    <div
+                                        className={styles['home-table-column']}
+                                    >
                                         {formatPrice(coin.marketCapUsd)} $
                                     </div>
                                     <div
                                         className={
                                             coin.changePercent24Hr > 0
-                                                ? 'home-table-column percent-red'
-                                                : 'home-table-column percent-green'
+                                                ? `${styles['home-table-column']} ${styles['percent-red']}`
+                                                : `${styles['home-table-column']} ${styles['percent-green']}`
                                         }
                                     >
                                         {formatPrice(coin.changePercent24Hr)}%
                                     </div>
-                                    <div className="home-table-column">
+                                    <div
+                                        className={styles['home-table-column']}
+                                    >
                                         <Button
                                             value="Add"
-                                            className="home-table-add-btn"
+                                            className={
+                                                styles['home-table-add-btn']
+                                            }
                                             handler={(e) => {
                                                 e.stopPropagation()
                                                 setCoinAddId(coin.id)
@@ -219,15 +245,15 @@ const Home = ():ReactElement => {
                             </div>
                         )
                     })}
-        
-                    <div className="pagination">
+
+                    <div className={styles['pagination']}>
                         {Array.from({ length: totalPages }).map((_, index) => (
                             <Button
                                 handler={() => handlePageChange(index + 1)}
                                 className={
                                     currentPage === index + 1
-                                        ? 'pagination-btn active'
-                                        : 'pagination-btn'
+                                        ? `${styles['pagination-btn']} ${styles['active']}`
+                                        : styles['pagination-btn']
                                 }
                                 value={(index + 1).toString()}
                             />
