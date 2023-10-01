@@ -7,7 +7,7 @@ import {
     coinPrice,
     coinPriceResponse,
 } from './types'
-import './coinInfo.scss'
+import styles from './CoinInfo.module.scss'
 import { formatPrice, getLogoUrl, formatNumber } from '@/app/shared/Utility'
 import Button from '@/app/shared/Button'
 import Chart from './Chart'
@@ -19,7 +19,7 @@ interface ICoinInfoProps {
     params: { id: string }
 }
 const periods = ['1D', '7D', '1M']
-const CoinInfo = ({ params }: ICoinInfoProps):ReactElement => {
+const CoinInfo = ({ params }: ICoinInfoProps): ReactElement => {
     const [info, setInfo] = useState<coinInfo>()
     const [error, setError] = useState<any>(null)
     const [graphData, setGraphData] = useState<coinPrice[]>([])
@@ -111,44 +111,57 @@ const CoinInfo = ({ params }: ICoinInfoProps):ReactElement => {
     }
     if (!info) return <div>Loading...</div>
     return (
-        <div className="coinpage-container">
-            <div className="coininfo-container">
-                <div className="coininfo-name-container">
-                    <img src={info.image} className="coininfo-logo" />
-                    <div className="coininfo-text name">{info.name}</div>
-                    <div className="coininfo-text symbol">{info.symbol}</div>
+        <div className={styles['coinpage-container']}>
+            <div className={styles['coininfo-container']}>
+                <div className={styles['coininfo-name-container']}>
+                    <img src={info.image} className={styles['coininfo-logo']} />
+                    <div className={`${styles['coininfo-text']} ${styles['name']}`}>
+                        {info.name}
+                    </div>
+                    <div className={`${styles['coininfo-text']} ${styles['symbol']}`}>
+                        {info.symbol}
+                    </div>
                     <Link href={'/'}>
-                        <img src="/back.png" className="coinInfo-back-arrow" />
+                        <img
+                            src="/back.png"
+                            className={styles['coinInfo-back-arrow']}
+                        />
                     </Link>
                 </div>
 
-                <div className="coininfo-text price">
+                <div className={`${styles['coininfo-text']} ${styles['price']}`}>
                     {info.priceUsd < 0.01
                         ? info.priceUsd.toFixed(7)
                         : formatPrice(info.priceUsd)}{' '}
                     $
                 </div>
-                <div className="coininfo-text-key-value-container">
-                    <div className="coininfo-text key">Rank: </div>
-                    <div className="coininfo-text value">#{info.rank}</div>
+                <div className={styles['coininfo-text-key-value-container']}>
+                    <div className={`${styles['coininfo-text']} ${styles['key']}`}>Rank: </div>
+                    <div className={`${styles['coininfo-text']} ${styles['value']}`}>
+                        #{info.rank}
+                    </div>
                 </div>
 
-                <div className="coininfo-text-key-value-container">
-                    <div className="coininfo-text key">Supply: </div>
-                    <div className="coininfo-text value">
+                <div className={styles['coininfo-text-key-value-container']}>
+                    <div className={`${styles['coininfo-text']} ${styles['key']}`}>Supply: </div>
+                    <div className={`${styles['coininfo-text']} ${styles['value']}`}>
                         {formatNumber(info.supply)} {info.symbol}
                     </div>
                 </div>
-                <div className="coininfo-text-key-value-container">
-                    <div className="coininfo-text key">Max Supply: </div>
-                    <div className="coininfo-text value">
+                <div className={styles['coininfo-text-key-value-container']}>
+                    <div className={`${styles['coininfo-text']} ${styles['key']}`}>
+                        Max Supply:{' '}
+                    </div>
+                    <div className={`${styles['coininfo-text']} ${styles['value']}`}>
                         {info.maxSupply ? formatNumber(info.maxSupply) : '-'}{' '}
                         {info.symbol}
                     </div>
                 </div>
-                <div className="coininfo-text-key-value-container">
-                    <div className="coininfo-text key">Market Cap: </div>
-                    <div className="coininfo-text value">
+                <div className={styles['coininfo-text-key-value-container']}>
+                    <div className={`${styles['coininfo-text']} ${styles['key']}`}>
+                        Market Cap:{' '}
+                    </div>
+                    <div className={`${styles['coininfo-text']} ${styles['value']}`}>
                         {formatNumber(info.marketCapUsd)}$
                     </div>
                 </div>
@@ -156,7 +169,7 @@ const CoinInfo = ({ params }: ICoinInfoProps):ReactElement => {
 
             <Button
                 value="Add"
-                className="coinInfo-btn"
+                className={styles['coinInfo-btn']}
                 handler={() => {
                     setAddModalActive(true)
                     setCoinAddId(info.id)
@@ -165,16 +178,16 @@ const CoinInfo = ({ params }: ICoinInfoProps):ReactElement => {
                 }}
             />
 
-            <div className="coininfo-chart-container">
-                <div className="coininfo-period-container">
+            <div className={styles['coininfo-chart-container']}>
+                <div className={styles['coininfo-period-container']}>
                     {periods.map((el, index) => {
                         return (
                             <Button
                                 key={index}
                                 className={
                                     currPeriod == index
-                                        ? 'coininfo-period-btn active'
-                                        : 'coininfo-period-btn'
+                                        ? `${styles['coininfo-period-btn']} ${styles['active']}`
+                                        : styles['coininfo-period-btn']
                                 }
                                 value={el}
                                 handler={() => {
@@ -184,7 +197,7 @@ const CoinInfo = ({ params }: ICoinInfoProps):ReactElement => {
                         )
                     })}
                 </div>
-                <div className="coininfo-chart">
+                <div className={styles['coininfo-chart']}>
                     <Chart graphData={graphData} width={1000} height={600} />
                 </div>
             </div>
