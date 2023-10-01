@@ -39,15 +39,6 @@
                 &.header {
                     display: flex;
                     font-weight: 600;
-
-                    .filter-image-container {
-                        display: flex;
-                        flex-direction: column;
-                        gap: 5px;
-                        .filter-image {
-                            width: 20px;
-                        }
-                    }
                 }
                 .home-table-image {
                     width: 30%;
@@ -62,9 +53,9 @@
                 }
                 .home-table-add-btn {
                     height: 5vh;
-                    background: #b8b9bd;       
-                    &:hover{
-                        background-color: #DFDEDE;
+                    background: #b8b9bd;
+                    &:hover {
+                        background-color: #dfdede;
                         transition: all 0.5s;
                     }
                 }
