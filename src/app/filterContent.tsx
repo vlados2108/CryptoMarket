@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react'
 import Input from './shared/Input'
 import Button from './shared/Button'
-import styles from './filterContent.module.scss'
+import styles from './FilterContent.module.scss'
 import { Filters } from './types'
 
 interface IFilterContentProps {
@@ -9,8 +9,11 @@ interface IFilterContentProps {
     discardFilters: () => void
 }
 
-const params = ['Price', 'Market cap', '24h %']
-
+const params = [
+    { name: 'Price', min: 0, max: 99999 },
+    { name: 'Market cap', min: 0, max: 999999999999 },
+    { name: '24h %', min: -100, max: 1000 },
+]
 const FilterContent = ({
     applyFilters,
     discardFilters,
@@ -23,6 +26,7 @@ const FilterContent = ({
         'Market cap1': '',
         'Market cap2': '',
     })
+    const [error, setError] = useState<any>(null)
 
     const handleInputChange = (param: string, value: string) => {
         setParamValues((prevValues: any) => ({
@@ -32,40 +36,101 @@ const FilterContent = ({
     }
 
     const apply = () => {
-        const filters: Filters = {
-            price1: paramValues[params[0] + '1'],
-            price2: paramValues[params[0] + '2'],
-            cap1: paramValues[params[1] + '1'],
-            cap2: paramValues[params[1] + '2'],
-            perc1: paramValues[params[2] + '1'],
-            perc2: paramValues[params[2] + '2'],
+        let validationFailed = false
+        params.map((param) => {
+            if (
+                !validateFilter(
+                    paramValues[param.name + '1'],
+                    paramValues[param.name + '2'],
+                    param.min,
+                    param.max
+                )
+            ) {
+                setError(
+                    new Error(
+                        `${param.name} should be in range of ${param.min} to ${param.max} and left value must be less than right value`
+                    )
+                )
+                validationFailed = true
+            }
+        })
+
+        if (validationFailed) {
+            return
         }
-        console.log(filters)
+        const filters = {
+            price1: paramValues[params[0].name + '1'],
+            price2: paramValues[params[0].name + '2'],
+            cap1: paramValues[params[1].name + '1'],
+            cap2: paramValues[params[1].name + '2'],
+            perc1: paramValues[params[2].name + '1'],
+            perc2: paramValues[params[2].name + '2'],
+        }
+
         applyFilters(filters)
     }
     const discard = () => {
         params.map((param) => {
-            handleInputChange(param + '1', '')
-            handleInputChange(param + '2', '')
+            handleInputChange(param.name + '1', '')
+            handleInputChange(param.name + '2', '')
         })
         discardFilters()
     }
 
+    const validateFilter = (
+        val1: string,
+        val2: string,
+        min: number,
+        max: number
+    ): boolean => {
+        const numericMin = parseFloat(val1)
+        const numericMax = parseFloat(val2)
+
+        if (!isNaN(numericMin) && !isNaN(numericMax)) {
+            return (
+                numericMin <= numericMax && numericMin > min && numericMax < max
+            )
+        } else if (!isNaN(numericMin)) {
+            return numericMin >= min && numericMin <= max
+        } else if (!isNaN(numericMax)) {
+            return numericMax >= min && numericMax <= max
+        }
+
+        return true
+    }
+
+    if (error)
+        return (
+            <div className={styles['filters-container']}>
+                <div className={styles['filters-error']}>{error.message}</div>
+                <Button
+                    className={styles['filterContent-btn']}
+                    handler={() => {
+                        setError(null)
+                    }}
+                    value="Try again"
+                />
+            </div>
+        )
     return (
         <div className={styles['filters-container']}>
             {params.map((param) => {
+                const name = param.name
                 return (
-                    <div className={styles['filter-container']}>
-                        <div className={styles['filter-name']}>{param}</div>
+                    <div className={styles['filter-container']} key={name}>
+                        <div className={styles['filter-name']}>{name}</div>
 
                         <div className={styles['filter-inputs-container']}>
                             <Input
                                 type="number"
                                 className={styles['filter-input']}
-                                placeholder={param !== '24h %' ? '0$' : '-100%'}
-                                value={paramValues[param + '1']}
+                                placeholder={
+                                    param.min.toString() +
+                                    (name === '24h %' ? '%' : '$')
+                                }
+                                value={paramValues[name + '1']}
                                 handler={(value) => {
-                                    handleInputChange(param + '1', value)
+                                    handleInputChange(name + '1', value)
                                 }}
                             />
                             <div className={styles['filter-to']}>to</div>
@@ -73,13 +138,12 @@ const FilterContent = ({
                                 type="number"
                                 className={styles['filter-input']}
                                 placeholder={
-                                    param !== '24h %'
-                                        ? '999 999 999 999$'
-                                        : '1000%'
+                                    param.max.toString() +
+                                    (name === '24h %' ? '%' : '$')
                                 }
-                                value={paramValues[param + '2']}
+                                value={paramValues[name + '2']}
                                 handler={(value) => {
-                                    handleInputChange(param + '2', value)
+                                    handleInputChange(name + '2', value)
                                 }}
                             />
                         </div>
