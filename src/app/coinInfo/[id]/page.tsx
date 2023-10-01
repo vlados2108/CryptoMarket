@@ -2,7 +2,7 @@
 import React, { ReactElement, useEffect, useState } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
-import Chart from './Chart'
+import Chart from './chart'
 import Button from '@/app/shared/Button'
 import Modal from '@/app/shared/Modal'
 import AddModalBody from '@/app/shared/AddModalBody'
