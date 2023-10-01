@@ -10,7 +10,7 @@ import {
 import './coinInfo.scss'
 import { formatPrice, getLogoUrl, formatNumber } from '@/app/shared/Utility'
 import Button from '@/app/shared/Button'
-import Chart from './chart'
+import Chart from './Chart'
 import Link from 'next/link'
 import Modal from '@/app/shared/Modal'
 import AddModalBody from '@/app/shared/AddModalBody'

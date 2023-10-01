@@ -5,7 +5,7 @@ import { appPrefix, formatNumber } from '../Utility'
 import styles from './Header.module.scss'
 import Modal from '../Modal'
 import BackpackModalBody from '../BackpackModalBody'
-import { useGlobalContext } from '@/app/context'
+import { useGlobalContext } from '@/app/Context'
 const Header = (): ReactElement => {
     const [price1, setPrice1] = useState(0)
     const [price2, setPrice2] = useState(0)

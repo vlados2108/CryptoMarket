@@ -3,7 +3,7 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import styles from './BackpackModalBody.module.scss'
 import { appPrefix, formatNumber } from '@/app/shared/Utility'
 import Button from '../Button'
-import { useGlobalContext } from '@/app/context'
+import { useGlobalContext } from '@/app/Context'
 interface coinInBackPack {
     id: string
     name: string

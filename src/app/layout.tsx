@@ -1,6 +1,6 @@
 import Header from './shared/Header'
 import './layout.scss'
-import { GlobalContextProvider } from './context'
+import { GlobalContextProvider } from './Context'
 import { ReactElement } from 'react'
 const RootLayout =({
     children,
