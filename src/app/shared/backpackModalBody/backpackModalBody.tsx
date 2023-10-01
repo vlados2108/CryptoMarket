@@ -14,7 +14,7 @@ interface coinInBackPack {
 }
 const BackpackModalBody = (): ReactElement => {
     const [coins, setCoins] = useState<coinInBackPack[]>([])
-    const { dateAdded, setDateAdded } = useGlobalContext()
+    const { coinAdded, setCoinAdded } = useGlobalContext()
     useEffect(() => {
         const coins: coinInBackPack[] = []
         for (let key in localStorage) {
@@ -27,13 +27,13 @@ const BackpackModalBody = (): ReactElement => {
             }
         }
         setCoins(coins)
-    }, [dateAdded])
+    }, [coinAdded])
 
     const deleteCoin = (id: string) => {
         localStorage.removeItem(appPrefix + id)
         const newCoins = coins.filter((coin) => coin.id != id)
         setCoins(newCoins)
-        setDateAdded(Math.random())
+        setCoinAdded(Math.random())
     }
 
     return (

@@ -10,13 +10,13 @@ import {
 } from 'react'
 
 interface ContextProps {
-    dateAdded: number
-    setDateAdded: Dispatch<SetStateAction<number>>
+    coinAdded: number
+    setCoinAdded: Dispatch<SetStateAction<number>>
 }
 
 const GlobalContext = createContext<ContextProps>({
-    dateAdded: 0,
-    setDateAdded: (): number => 0,
+    coinAdded: 0,
+    setCoinAdded: (): number => 0,
 })
 
 export const GlobalContextProvider = ({
@@ -24,10 +24,10 @@ export const GlobalContextProvider = ({
 }: {
     children: ReactNode
 }) => {
-    const [dateAdded, setDateAdded] = useState(0)
+    const [coinAdded, setCoinAdded] = useState(0)
 
     return (
-        <GlobalContext.Provider value={{ dateAdded, setDateAdded }}>
+        <GlobalContext.Provider value={{ coinAdded, setCoinAdded }}>
             {children}
         </GlobalContext.Provider>
     )

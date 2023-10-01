@@ -14,7 +14,7 @@ const Header = (): ReactElement => {
     const [backpackSum, setBackpackSum] = useState(0)
     const [diff, setDiff] = useState(0)
     const [backpackModalActive, setBackpackModalActive] = useState(false)
-    const { dateAdded } = useGlobalContext()
+    const { coinAdded } = useGlobalContext()
     useEffect(() => {
         axios.get(`https://api.coincap.io/v2/assets/bitcoin`).then((res) => {
             setPrice1(res.data.data.priceUsd)
@@ -52,7 +52,7 @@ const Header = (): ReactElement => {
             setBackpackSum(mySum)
             setDiff(diff)
         })
-    }, [dateAdded])
+    }, [coinAdded])
 
     return (
         <div className={styles['header-container']}>

@@ -20,7 +20,7 @@ const AddModalBody = ({
 }: IAddModalBodyProps): ReactElement => {
     const [n, setN] = useState('')
     const [error, setError] = useState<any>(null)
-    const { dateAdded, setDateAdded } = useGlobalContext()
+    const { coinAdded, setCoinAdded } = useGlobalContext()
     const MAX_COUNT = 10000
     const MIN_COUNT = 1
     const handleAdd = () => {
@@ -57,7 +57,7 @@ const AddModalBody = ({
         }
 
         localStorage.setItem(appPrefix + coinId, JSON.stringify(data))
-        setDateAdded(Math.random())
+        setCoinAdded(Math.random())
         onCloseAdd()
     }
 
