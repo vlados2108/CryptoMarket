@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import {
     AreaChart,
     Area,
@@ -16,7 +16,7 @@ interface IChartProps {
     height: number
 }
 
-export default function Chart({ graphData, width, height }: IChartProps) {
+const Chart= ({ graphData, width, height }: IChartProps):ReactElement => {
     return (
         <ResponsiveContainer width="100%" height="100%">
             <AreaChart
@@ -56,3 +56,5 @@ export default function Chart({ graphData, width, height }: IChartProps) {
         </ResponsiveContainer>
     )
 }
+
+export default Chart
