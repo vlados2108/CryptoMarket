@@ -1,7 +1,22 @@
 .filters-container {
     display: flex;
     flex-direction: column;
-
+    width: 100%;
+    .filters-error {
+        font-size: 20px;
+        height: auto;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .filterContent-btn {
+        height: 50px;
+        font-size: 25px;
+        background: #b8b9bd;
+        &:hover{
+            background-color: #DFDEDE;
+            transition: all 0.5s;
+        }
+    }
     .filter-container {
         display: flex;
         flex-direction: column;
@@ -36,15 +51,6 @@
         display: flex;
         gap: 10px;
         margin: 1% auto;
-        .filterContent-btn {
-            height: 50px;
-            font-size: 25px;
-            background: #b8b9bd;
-            &:hover{
-                background-color: #DFDEDE;
-                transition: all 0.5s;
-            }
-        }
     }
 }
 

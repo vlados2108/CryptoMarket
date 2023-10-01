@@ -1,21 +1,25 @@
-.addBody-container{
+.addBody-container {
     display: flex;
     flex-direction: column;
     width: 100%;
     margin: 0 auto;
-    height: 100%;  
-    .addBody-input{
+    .addBody-input {
         text-align: center;
-        height: 50%;
+        height: 40px;
         margin-bottom: 5px;
-    }   
-    .addBody-btn{
-        height: 50%;
+        width: 100%;
     }
-    .addBody-error{
-        height: 50%;
+    .addBody-btn {
+        height: 40px;
+        background: #b8b9bd;
+        &:hover {
+            background-color: #dfdede;
+            transition: all 0.5s;
+        }
+    }
+    .addBody-error {
+        height: auto;
         text-align: center;
         font-size: 20px;
     }
 }
-
