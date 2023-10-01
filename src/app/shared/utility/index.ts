@@ -1,6 +1,7 @@
 import { Coin, Filters } from '../../types'
 
 export const appPrefix = 'cryptomarket_'
+
 export const formatPrice = (price: number): string => {
     if (Math.abs(price) >= 1e9) {
         return (price / 1e9).toFixed(2) + 'b'

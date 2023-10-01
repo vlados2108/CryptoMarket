@@ -1,11 +1,12 @@
 'use client'
-import axios from 'axios'
 import React, { ReactElement, useEffect, useState } from 'react'
-import { appPrefix, formatNumber } from '../Utility'
-import styles from './Header.module.scss'
+import axios from 'axios'
 import Modal from '../Modal'
 import BackpackModalBody from '../BackpackModalBody'
+import { appPrefix, formatNumber } from '../Utility'
 import { useGlobalContext } from '@/app/Context'
+import styles from './Header.module.scss'
+
 const Header = (): ReactElement => {
     const [price1, setPrice1] = useState(0)
     const [price2, setPrice2] = useState(0)

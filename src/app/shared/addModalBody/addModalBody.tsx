@@ -2,9 +2,9 @@
 import React, { ReactElement, useState } from 'react'
 import Input from '../Input'
 import Button from '../Button'
-import styles from './AddModalBody.module.scss'
 import { appPrefix } from '@/app/shared/Utility'
 import { useGlobalContext } from '@/app/Context'
+import styles from './AddModalBody.module.scss'
 
 interface IAddModalBodyProps {
     coinId: string

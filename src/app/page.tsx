@@ -1,8 +1,14 @@
 'use client'
-import { Context, ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import Input from './shared/Input'
+import Button from './shared/Button'
+import Modal from './shared/Modal'
+import AddModalBody from './shared/AddModalBody'
+import FilterContent from './FilterContent'
+import Arrows from './Arrows'
 import { Coin, CoinResponse, Filters } from './types'
-import styles from './home.module.scss'
 import {
     formatPrice,
     getLogoUrl,
@@ -10,14 +16,7 @@ import {
     sortByAscending,
     sortByDescending,
 } from './shared/Utility'
-import Input from './shared/Input'
-import Button from './shared/Button'
-import Modal from './shared/Modal/Modal'
-import FilterContent from './FilterContent'
-import Arrows from './Arrows'
-import Link from 'next/link'
-import AddModalBody from './shared/AddModalBody'
-import { useRouter } from 'next/navigation'
+import styles from './home.module.scss'
 
 const Home = (): ReactElement => {
     const [coins, setCoins] = useState<Coin[]>([])
@@ -116,7 +115,9 @@ const Home = (): ReactElement => {
                     value="Filters"
                 />
                 <div className={styles['home-table']}>
-                    <div className={`${styles['home-table-row']} ${styles['header']}`}>
+                    <div
+                        className={`${styles['home-table-row']} ${styles['header']}`}
+                    >
                         <div
                             className={`${styles['home-table-column']} ${styles['header']}`}
                         >

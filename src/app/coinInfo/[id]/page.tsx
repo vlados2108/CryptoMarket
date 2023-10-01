@@ -1,19 +1,19 @@
 'use client'
 import React, { ReactElement, useEffect, useState } from 'react'
+import Link from 'next/link'
 import axios from 'axios'
+import Chart from './Chart'
+import Button from '@/app/shared/Button'
+import Modal from '@/app/shared/Modal'
+import AddModalBody from '@/app/shared/AddModalBody'
 import {
     coinInfo,
     coinInfoResponse,
     coinPrice,
     coinPriceResponse,
 } from './types'
-import styles from './CoinInfo.module.scss'
 import { formatPrice, getLogoUrl, formatNumber } from '@/app/shared/Utility'
-import Button from '@/app/shared/Button'
-import Chart from './Chart'
-import Link from 'next/link'
-import Modal from '@/app/shared/Modal'
-import AddModalBody from '@/app/shared/AddModalBody'
+import styles from './CoinInfo.module.scss'
 
 interface ICoinInfoProps {
     params: { id: string }

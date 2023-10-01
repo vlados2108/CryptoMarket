@@ -1,9 +1,10 @@
 'use client'
 import React, { ReactElement, useEffect, useState } from 'react'
-import styles from './BackpackModalBody.module.scss'
-import { appPrefix, formatNumber } from '@/app/shared/Utility'
 import Button from '../Button'
+import { appPrefix, formatNumber } from '@/app/shared/Utility'
 import { useGlobalContext } from '@/app/Context'
+import styles from './BackpackModalBody.module.scss'
+
 interface coinInBackPack {
     id: string
     name: string
@@ -13,7 +14,7 @@ interface coinInBackPack {
 }
 const BackpackModalBody = (): ReactElement => {
     const [coins, setCoins] = useState<coinInBackPack[]>([])
-    const { dateAdded,setDateAdded } = useGlobalContext()
+    const { dateAdded, setDateAdded } = useGlobalContext()
     useEffect(() => {
         const coins: coinInBackPack[] = []
         for (let key in localStorage) {

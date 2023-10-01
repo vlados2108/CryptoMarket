@@ -1,6 +1,7 @@
 'use client'
 import React, { Dispatch, ReactElement, ReactNode, SetStateAction } from 'react'
 import styles from './Modal.module.scss'
+
 interface ActiveProps {
     active: boolean
     setActive: Dispatch<SetStateAction<boolean>>

@@ -1,8 +1,8 @@
 import React, { ReactElement, useState } from 'react'
 import Input from './shared/Input'
 import Button from './shared/Button'
-import styles from './FilterContent.module.scss'
 import { Filters } from './types'
+import styles from './FilterContent.module.scss'
 
 interface IFilterContentProps {
     applyFilters: (filters: Filters) => void

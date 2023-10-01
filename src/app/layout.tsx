@@ -1,12 +1,13 @@
+import { ReactElement,ReactNode } from 'react'
 import Header from './shared/Header'
-import './layout.scss'
 import { GlobalContextProvider } from './Context'
-import { ReactElement } from 'react'
+import './layout.scss'
+
 const RootLayout =({
     children,
 }: {
-    children: React.ReactNode
-}) => {
+    children: ReactNode
+}):ReactElement => {
     return (
         <html lang="en">
             <body>

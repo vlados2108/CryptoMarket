@@ -12,6 +12,7 @@ type InputProps = {
     value?: string
     setValue?: Dispatch<SetStateAction<string>>
 }
+
 const Input = ({
     handler,
     className,
