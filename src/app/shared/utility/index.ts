@@ -13,7 +13,7 @@ export const formatPrice = (price: number): string => {
     }
 }
 
-export function formatNumber(number: number) {
+export const formatNumber = (number: number): string => {
     const [integerPart, fractionalPart] = Number(number).toFixed(2).split('.')
     const formattedIntegerPart = integerPart.replace(
         /\B(?=(\d{3})+(?!\d))/g,
@@ -27,7 +27,7 @@ export const getLogoUrl = (coinSymbol: string): string => {
 }
 
 // Функция сортировки по возрастанию
-export function sortByAscending(coins: Coin[], key: keyof Coin) {
+export const sortByAscending = (coins: Coin[], key: keyof Coin): Coin[] => {
     //return [...coins].sort((a, b) => a[key] - b[key]);
     return [...coins].sort((a, b) => {
         if (a[key] < b[key]) return -1
@@ -37,7 +37,7 @@ export function sortByAscending(coins: Coin[], key: keyof Coin) {
 }
 
 // Функция сортировки по убыванию
-export function sortByDescending(coins: Coin[], key: keyof Coin) {
+export const sortByDescending = (coins: Coin[], key: keyof Coin): Coin[] => {
     return [...coins].sort((a, b) => {
         if (a[key] > b[key]) return -1
         if (a[key] < b[key]) return 1
@@ -45,7 +45,7 @@ export function sortByDescending(coins: Coin[], key: keyof Coin) {
     })
 }
 
-export function filterCoins(coins: Coin[], filters: Filters) {
+export const filterCoins = (coins: Coin[], filters: Filters): Coin[] => {
     return coins.filter((coin) => {
         // Функция проверки диапазона
         const isInRange = (value: number, min: string, max: string) => {
